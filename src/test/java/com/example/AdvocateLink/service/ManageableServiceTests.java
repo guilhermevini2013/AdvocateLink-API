@@ -14,22 +14,37 @@ public class ManageableServiceTests {
     @Autowired
     private ManageableService manageableService;
     private Long idExists;
+    private Long idExists2;
     private Long idNotExists;
 
     @BeforeEach
     void setUp() {
-        idExists = 1l;
+        idExists = 2l;
+        idExists2 = 1l;
         idNotExists = 100l;
     }
     @Test
     public void findByIdShouldReturnObjectWhenIdExists(){
-        ManageableDTO entity = manageableService.findById(idExists);
+        ManageableDTO entity = manageableService.findById(idExists2);
         Assertions.assertNotNull(entity);
     }
     @Test
     public void findByIdShouldReturnErrorWhenIdNotExists(){
         Assertions.assertThrows(ResourceNotFoundException.class,()->{
             manageableService.findById(idNotExists);
+        });
+    }
+    @Test
+    public void deleteShouldDeleteObjectWhenIdExists(){
+        manageableService.delete(idExists);
+        Assertions.assertThrows(ResourceNotFoundException.class,()->{
+            manageableService.findById(idExists);
+        });
+    }
+    @Test
+    public void deleteShouldReturnErrorWhenIdNotExists(){
+        Assertions.assertThrows(ResourceNotFoundException.class,()->{
+            manageableService.delete(idNotExists);
         });
     }
 }
