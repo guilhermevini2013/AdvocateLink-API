@@ -22,12 +22,12 @@ public class ExHandler {
     public ResponseEntity<StandardError> ResourceNotFound(ResourceNotFoundException e, HttpServletRequest request){
         status = HttpStatus.NOT_FOUND;
         logger.error(e.getMessage());
-        return ResponseEntity.status(status).body(new StandardError(Instant.now(),status.value(), e.getMessage(), request.getContextPath()));
+        return ResponseEntity.status(status).body(new StandardError(Instant.now(),status.value(), e.getMessage(), request.getServletPath()));
     }
     @ExceptionHandler(DataBaseException.class)
     public ResponseEntity<StandardError> DataBaseError(DataBaseException e, HttpServletRequest request){
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         logger.error(e.getMessage());
-        return ResponseEntity.status(status).body(new StandardError(Instant.now(),status.value(),e.getMessage(), request.getContextPath()));
+        return ResponseEntity.status(status).body(new StandardError(Instant.now(),status.value(),e.getMessage(), request.getServletPath()));
     }
 }

@@ -1,5 +1,6 @@
 package com.example.AdvocateLink.models;
 
+import com.example.AdvocateLink.dto.ContactDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +11,6 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "contact")
-@AllArgsConstructor
 @NoArgsConstructor
 public class Contact {
     @Id
@@ -18,5 +18,9 @@ public class Contact {
     private Long id;
     private String email;
     private Long telephone;
-
+    public Contact(ContactDTO contactDTO){
+        this.id = contactDTO.getId();
+        this.email = contactDTO.getEmail();
+        this.telephone = contactDTO.getTelephone();
+    }
 }

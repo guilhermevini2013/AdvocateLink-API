@@ -8,6 +8,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/advocateLink/api/v1/manageable")
@@ -29,5 +32,11 @@ public class ManageableController {
     public ResponseEntity<Void> delete(@PathVariable Long id){
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+    @PostMapping
+    public ResponseEntity<ManageableDTO> insert(@RequestBody ManageableDTO manageableDTO){
+        manageableDTO = service.insert(manageableDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(manageableDTO.getId()).toUri();
+        return ResponseEntity.created(uri).body(manageableDTO);
     }
 }

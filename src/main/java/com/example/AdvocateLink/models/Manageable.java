@@ -1,6 +1,8 @@
 package com.example.AdvocateLink.models;
 
 
+import com.example.AdvocateLink.dto.AddressDTO;
+import com.example.AdvocateLink.dto.ContactDTO;
 import com.example.AdvocateLink.dto.ManageableDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -52,5 +54,11 @@ public class Manageable {
         this.urlPhoto = entityDTO.getUrlPhoto();
         this.role = entityDTO.getRole();
         this.salary = entityDTO.getSalary();
+    }
+
+    public Manageable(ManageableDTO manageableDTO, Set<AddressDTO> addressesDTO, Set<ContactDTO> contactsDTO) {
+        this(manageableDTO);
+        addressesDTO.forEach(x-> addresses.add(new Address(x)));
+        contactsDTO.forEach(x-> contacts.add(new Contact(x)));
     }
 }
