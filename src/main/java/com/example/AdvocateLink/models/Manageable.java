@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Setter
 @Table(name = "manageable")
 public class Manageable {
     @Id
@@ -58,7 +60,15 @@ public class Manageable {
 
     public Manageable(ManageableDTO manageableDTO, Set<AddressDTO> addressesDTO, Set<ContactDTO> contactsDTO) {
         this(manageableDTO);
-        addressesDTO.forEach(x-> addresses.add(new Address(x)));
-        contactsDTO.forEach(x-> contacts.add(new Contact(x)));
+        addressesDTO.forEach(x -> addresses.add(new Address(x)));
+        contactsDTO.forEach(x -> contacts.add(new Contact(x)));
+    }
+
+    public void addAddresses(AddressDTO addressDTO) {
+        addresses.add(new Address(addressDTO));
+    }
+
+    public void addContact(ContactDTO contactDTO) {
+        contacts.add(new Contact(contactDTO));
     }
 }

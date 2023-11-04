@@ -1,7 +1,6 @@
 package com.example.AdvocateLink.service;
 
 import com.example.AdvocateLink.dto.ManageableDTO;
-import com.example.AdvocateLink.models.Manageable;
 import com.example.AdvocateLink.service.factory.Factory;
 import com.example.AdvocateLink.services.ManageableService;
 import com.example.AdvocateLink.services.exceptions.ResourceNotFoundException;
@@ -18,41 +17,51 @@ public class ManageableServiceTests {
     private Long idExists;
     private Long idExists2;
     private Long idNotExists;
+    private ManageableDTO manageableDTO;
 
     @BeforeEach
     void setUp() {
         idExists = 2l;
         idExists2 = 1l;
         idNotExists = 100l;
+        manageableDTO = Factory.createManageableDTO();
     }
+
     @Test
-    public void findByIdShouldReturnObjectWhenIdExists(){
+    public void findByIdShouldReturnObjectWhenIdExists() {
         ManageableDTO entity = manageableService.findById(idExists2);
         Assertions.assertNotNull(entity);
     }
+
     @Test
-    public void findByIdShouldReturnErrorWhenIdNotExists(){
-        Assertions.assertThrows(ResourceNotFoundException.class,()->{
-            manageableService.findById(idNotExists);
-        });
+    public void findByIdShouldReturnResourceNotFoundExceptionWhenIdNotExists() {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> manageableService.findById(idNotExists));
     }
+
     @Test
-    public void deleteShouldDeleteObjectWhenIdExists(){
+    public void deleteShouldDeleteObjectWhenIdExists() {
         manageableService.delete(idExists);
-        Assertions.assertThrows(ResourceNotFoundException.class,()->{
-            manageableService.findById(idExists);
-        });
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> manageableService.findById(idExists));
     }
+
     @Test
-    public void deleteShouldReturnErrorWhenIdNotExists(){
-        Assertions.assertThrows(ResourceNotFoundException.class,()->{
-            manageableService.delete(idNotExists);
-        });
+    public void deleteShouldReturnResourceNotFoundExceptionWhenIdNotExists() {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> manageableService.delete(idNotExists));
     }
+
     @Test
-    public void insertShouldInsertIntoBD(){
-        ManageableDTO entityDTO = Factory.createManageableDTO();
-        entityDTO = manageableService.insert(entityDTO);
-        Assertions.assertTrue(3l==entityDTO.getId());
+    public void insertShouldInsertIntoBD() {
+        manageableDTO = manageableService.insert(manageableDTO);
+        Assertions.assertTrue(3l == manageableDTO.getId());
+    }
+
+    @Test
+    public void updateShouldUpdateObjectWhenIdExists() {
+        Assertions.assertTrue(manageableService.update(idExists, manageableDTO));
+    }
+
+    @Test
+    public void updateShouldReturnResourceNotFoundExceptionWhenIdNotExists() {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> manageableService.update(idNotExists, manageableDTO));
     }
 }
