@@ -1,6 +1,8 @@
 package com.example.AdvocateLink.services;
 
+import com.example.AdvocateLink.dto.AddressDTO;
 import com.example.AdvocateLink.dto.ManageableDTO;
+import com.example.AdvocateLink.models.Address;
 import com.example.AdvocateLink.models.Manageable;
 import com.example.AdvocateLink.repostories.ManageableRepository;
 import com.example.AdvocateLink.services.exceptions.DataBaseException;
@@ -49,6 +51,7 @@ public class ManageableService implements Iservice<ManageableDTO> {
         try {
             Manageable entityReference = repository.getReferenceById(id);
             updateObject(manageableDTO, entityReference);
+            repository.save(entityReference);
             logger.info("Manageable Updated");
             return true;
         } catch (EntityNotFoundException | ObjectNotFoundException ex) {
@@ -76,8 +79,6 @@ public class ManageableService implements Iservice<ManageableDTO> {
         manageable.setRole(dto.getRole());
         manageable.setCpf(dto.getCpf());
         manageable.setSalary(dto.getSalary());
-        manageable.setUrlPhoto(manageable.getUrlPhoto());
-        dto.getAddressesDTO().forEach(x -> manageable.addAddresses(x));
-        dto.getContactsDTO().forEach(x -> manageable.addContact(x));
+        manageable.setUrlPhoto(dto.getUrlPhoto());
     }
 }

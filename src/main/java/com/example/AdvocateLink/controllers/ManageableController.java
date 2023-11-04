@@ -17,26 +17,36 @@ import java.net.URI;
 public class ManageableController {
     @Autowired
     private ManageableService service;
+
     @GetMapping
-    public ResponseEntity<Page<ManageableDTO>> list(@RequestParam(name = "pages",defaultValue = "0")Integer pages,
-                                                    @RequestParam(name = "linesPerPages",defaultValue = "15")Integer linesPerPages,
-                                                    @RequestParam(name = "direction",defaultValue = "ASC")String direction,
-                                                    @RequestParam(name = "orderBy",defaultValue = "name")String orderBy){
-        return ResponseEntity.ok(service.list(PageRequest.of(pages,linesPerPages, Sort.Direction.valueOf(direction),orderBy)));
+    public ResponseEntity<Page<ManageableDTO>> list(@RequestParam(name = "pages", defaultValue = "0") Integer pages,
+                                                    @RequestParam(name = "linesPerPages", defaultValue = "15") Integer linesPerPages,
+                                                    @RequestParam(name = "direction", defaultValue = "ASC") String direction,
+                                                    @RequestParam(name = "orderBy", defaultValue = "name") String orderBy) {
+        return ResponseEntity.ok(service.list(PageRequest.of(pages, linesPerPages, Sort.Direction.valueOf(direction), orderBy)));
     }
+
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ManageableDTO> findById(@PathVariable Long id){
+    public ResponseEntity<ManageableDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
+
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
     @PostMapping
-    public ResponseEntity<ManageableDTO> insert(@RequestBody ManageableDTO manageableDTO){
+    public ResponseEntity<ManageableDTO> insert(@RequestBody ManageableDTO manageableDTO) {
         manageableDTO = service.insert(manageableDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(manageableDTO.getId()).toUri();
         return ResponseEntity.created(uri).body(manageableDTO);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ManageableDTO manageableDTO) {
+        service.update(id, manageableDTO);
+        return ResponseEntity.ok().build();
     }
 }
