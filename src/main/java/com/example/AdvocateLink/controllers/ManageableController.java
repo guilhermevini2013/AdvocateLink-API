@@ -22,7 +22,7 @@ public class ManageableController {
         return ResponseEntity.ok(service.list(PageRequest.of(pages,linesPerPages, Sort.Direction.valueOf(direction),orderBy)));
     }
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ManageableDTO> findByid(@PathVariable Long id){
+    public ResponseEntity<ManageableDTO> findById(@PathVariable Long id){
         return ResponseEntity.ok(service.findById(id));
     }
     @DeleteMapping(value = "/{id}")

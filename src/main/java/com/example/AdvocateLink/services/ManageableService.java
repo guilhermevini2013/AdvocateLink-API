@@ -30,7 +30,7 @@ public class ManageableService implements Iservice<ManageableDTO> {
     }
     @Override
     @Transactional
-    public Void delete(Long id) {
+    public void delete(Long id) {
         try{
             Manageable entity = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Id not Found "+id));
             repository.delete(entity);
@@ -38,7 +38,6 @@ public class ManageableService implements Iservice<ManageableDTO> {
         }catch (DataIntegrityViolationException ex){
             throw new DataBaseException("Integrity Violation");
         }
-        return null;
     }
     @Override
     public ManageableDTO update(Long id, ManageableDTO manageableDTO) {
