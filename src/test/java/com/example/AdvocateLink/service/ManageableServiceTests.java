@@ -55,5 +55,4 @@ public class ManageableServiceTests {
         entityDTO = manageableService.insert(entityDTO);
         Assertions.assertTrue(3l==entityDTO.getId());
     }
-
 }

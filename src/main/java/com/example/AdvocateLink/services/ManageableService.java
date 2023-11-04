@@ -26,6 +26,7 @@ public class ManageableService implements Iservice<ManageableDTO> {
     @Transactional
     public ManageableDTO insert(ManageableDTO manageableDTO) {
         Manageable entity = repository.save(new Manageable(manageableDTO,manageableDTO.getAddressesDTO(),manageableDTO.getContactsDTO()));
+        logger.info("ManageableDTO Insert");
         return new ManageableDTO(entity,entity.getAddresses(),entity.getContacts());
     }
     @Override
@@ -46,13 +47,14 @@ public class ManageableService implements Iservice<ManageableDTO> {
     @Override
     @Transactional(readOnly = true)
     public Page<ManageableDTO> list(PageRequest pageRequest) {
+        logger.info("Page<ManageableDTO> Listed");
         return repository.findAll(pageRequest).map(x-> new ManageableDTO(x,x.getAddresses(),x.getContacts()));
     }
     @Override
     @Transactional(readOnly = true)
     public ManageableDTO findById(Long id) {
         Manageable entity = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Id Not Found "+id));
-        logger.info("Manageable found");
+        logger.info("Manageable Found");
         return new ManageableDTO(entity, entity.getAddresses(),entity.getContacts());
     }
 }
