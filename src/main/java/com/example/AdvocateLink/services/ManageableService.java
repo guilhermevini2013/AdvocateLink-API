@@ -23,10 +23,14 @@ public class ManageableService implements Iservice<ManageableDTO> {
     private ManageableRepository repository;
     final private Logger logger = LoggerFactory.getLogger(ManageableService.class);
     @Override
+    @Transactional
     public ManageableDTO insert(ManageableDTO manageableDTO) {
-        return null;
+        Manageable entity = new Manageable(manageableDTO);
+        entity = repository.save(entity);
+        return new ManageableDTO(entity);
     }
     @Override
+    @Transactional
     public Void delete(Long id) {
         try{
             Manageable entity = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Id not Found "+id));

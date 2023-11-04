@@ -1,6 +1,7 @@
 package com.example.AdvocateLink.models;
 
 
+import com.example.AdvocateLink.dto.ManageableDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import java.util.Set;
 public class Manageable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
     protected String name;
     protected String cpf;
     @ManyToMany
@@ -34,7 +35,7 @@ public class Manageable {
     protected String role;
     protected double salary;
 
-    public Manageable(long id, String nome, String cpf, Set<Address> addresses, Set<Contact> contacts, String urlPhoto, String role) {
+    public Manageable(Long id, String nome, String cpf, Set<Address> addresses, Set<Contact> contacts, String urlPhoto, String role) {
         this.id = id;
         this.name = nome;
         this.cpf = cpf;
@@ -42,5 +43,14 @@ public class Manageable {
         this.contacts = contacts;
         this.urlPhoto = urlPhoto;
         this.role = role;
+    }
+
+    public Manageable(ManageableDTO entityDTO) {
+        this.id = entityDTO.getId();
+        this.name = entityDTO.getName();
+        this.cpf = entityDTO.getCpf();
+        this.urlPhoto = entityDTO.getUrlPhoto();
+        this.role = entityDTO.getRole();
+        this.salary = entityDTO.getSalary();
     }
 }

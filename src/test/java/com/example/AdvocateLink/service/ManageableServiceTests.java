@@ -1,6 +1,8 @@
 package com.example.AdvocateLink.service;
 
 import com.example.AdvocateLink.dto.ManageableDTO;
+import com.example.AdvocateLink.models.Manageable;
+import com.example.AdvocateLink.service.factory.Factory;
 import com.example.AdvocateLink.services.ManageableService;
 import com.example.AdvocateLink.services.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.Assertions;
@@ -47,4 +49,11 @@ public class ManageableServiceTests {
             manageableService.delete(idNotExists);
         });
     }
+    @Test
+    public void insertShouldInsertIntoBD(){
+        ManageableDTO entityDTO = Factory.createManageableDTO();
+        entityDTO = manageableService.insert(entityDTO);
+        Assertions.assertTrue(3l==entityDTO.getId());
+    }
+
 }
