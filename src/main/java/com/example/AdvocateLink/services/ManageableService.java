@@ -25,8 +25,7 @@ public class ManageableService implements Iservice<ManageableDTO> {
     @Override
     @Transactional
     public ManageableDTO insert(ManageableDTO manageableDTO) {
-        Manageable entity = new Manageable(manageableDTO);
-        entity = repository.save(entity);
+        Manageable entity = repository.save(new Manageable(manageableDTO));
         return new ManageableDTO(entity);
     }
     @Override
