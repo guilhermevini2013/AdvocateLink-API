@@ -1,9 +1,9 @@
 package com.example.AdvocateLink.repostories;
 
-import com.example.AdvocateLink.models.Manageable;
+import com.example.AdvocateLink.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ManageableRepository extends JpaRepository<Manageable,Long> {
+public interface RoleRepository extends JpaRepository<Role,Long> {
 }

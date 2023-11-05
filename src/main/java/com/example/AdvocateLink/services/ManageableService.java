@@ -35,7 +35,7 @@ public class ManageableService implements Iservice<ManageableDTO> {
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void deleteById(Long id) {
         try {
             Manageable entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not Found " + id));
             repository.delete(entity);
@@ -76,7 +76,7 @@ public class ManageableService implements Iservice<ManageableDTO> {
 
     private void updateObject(ManageableDTO dto, Manageable manageable) {
         manageable.setName(dto.getName());
-        manageable.setRole(dto.getRole());
+        manageable.setRole_Id(dto.getRole_id());
         manageable.setCpf(dto.getCpf());
         manageable.setSalary(dto.getSalary());
         manageable.setUrlPhoto(dto.getUrlPhoto());

@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 @Entity
 public class Employee extends Manageable{
-    public Employee(long id, String nome, String cpf, Set<Address> addresses, Set<Contact> contacts, String urlPhoto, String role, double salary) {
+    public Employee(long id, String nome, String cpf, Set<Address> addresses, Set<Contact> contacts, String urlPhoto, Role role, double salary) {
         super(id, nome, cpf, addresses, contacts, urlPhoto, role, salary);
     }
     public Employee() {

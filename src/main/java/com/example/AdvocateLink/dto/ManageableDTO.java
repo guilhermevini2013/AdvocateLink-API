@@ -3,10 +3,8 @@ package com.example.AdvocateLink.dto;
 import com.example.AdvocateLink.models.Address;
 import com.example.AdvocateLink.models.Contact;
 import com.example.AdvocateLink.models.Manageable;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.AdvocateLink.models.Role;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,8 +20,8 @@ public class ManageableDTO {
     protected Set<AddressDTO> addressesDTO = new HashSet<>();
     protected Set<ContactDTO> contactsDTO = new HashSet<>();
     protected String urlPhoto;
-    protected String role;
-    protected double salary;
+    protected Role role_id;
+    protected Double salary;
     protected String oab;
 
     public ManageableDTO(Manageable manageable) {
@@ -31,7 +29,7 @@ public class ManageableDTO {
         this.name = manageable.getName();
         this.cpf = manageable.getCpf();
         this.urlPhoto = manageable.getUrlPhoto();
-        this.role = manageable.getRole();
+        this.role_id = manageable.getRole_Id();
         this.salary = manageable.getSalary();
     }
 

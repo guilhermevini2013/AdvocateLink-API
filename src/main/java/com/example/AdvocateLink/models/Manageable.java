@@ -4,6 +4,7 @@ package com.example.AdvocateLink.models;
 import com.example.AdvocateLink.dto.AddressDTO;
 import com.example.AdvocateLink.dto.ContactDTO;
 import com.example.AdvocateLink.dto.ManageableDTO;
+import com.example.AdvocateLink.dto.RoleDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,17 +37,19 @@ public class Manageable {
             inverseJoinColumns = @JoinColumn(name = "contacts_id"))
     protected Set<Contact> contacts = new HashSet<>();
     protected String urlPhoto;
-    protected String role;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    protected Role role_Id;
     protected double salary;
 
-    public Manageable(Long id, String nome, String cpf, Set<Address> addresses, Set<Contact> contacts, String urlPhoto, String role) {
+    public Manageable(Long id, String nome, String cpf, Set<Address> addresses, Set<Contact> contacts, String urlPhoto, Role role) {
         this.id = id;
         this.name = nome;
         this.cpf = cpf;
         this.addresses = addresses;
         this.contacts = contacts;
         this.urlPhoto = urlPhoto;
-        this.role = role;
+        this.role_Id = role;
     }
 
     public Manageable(ManageableDTO entityDTO) {
@@ -54,7 +57,7 @@ public class Manageable {
         this.name = entityDTO.getName();
         this.cpf = entityDTO.getCpf();
         this.urlPhoto = entityDTO.getUrlPhoto();
-        this.role = entityDTO.getRole();
+        this.role_Id = entityDTO.getRole_id();
         this.salary = entityDTO.getSalary();
     }
 

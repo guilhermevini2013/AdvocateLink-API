@@ -40,13 +40,13 @@ public class ManageableServiceTests {
 
     @Test
     public void deleteShouldDeleteObjectWhenIdExists() {
-        manageableService.delete(idExists);
+        manageableService.deleteById(idExists);
         Assertions.assertThrows(ResourceNotFoundException.class, () -> manageableService.findById(idExists));
     }
 
     @Test
     public void deleteShouldReturnResourceNotFoundExceptionWhenIdNotExists() {
-        Assertions.assertThrows(ResourceNotFoundException.class, () -> manageableService.delete(idNotExists));
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> manageableService.deleteById(idNotExists));
     }
 
     @Test
@@ -64,4 +64,5 @@ public class ManageableServiceTests {
     public void updateShouldReturnResourceNotFoundExceptionWhenIdNotExists() {
         Assertions.assertThrows(ResourceNotFoundException.class, () -> manageableService.update(idNotExists, manageableDTO));
     }
+
 }

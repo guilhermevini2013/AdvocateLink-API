@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 public interface Iservice<T> {
     T insert(T t);
 
-    void delete(Long id);
+    void deleteById(Long id);
 
     Boolean update(Long id, T t);
 

@@ -13,7 +13,7 @@ import java.util.Set;
 @Entity
 public class Client extends Manageable{
     private String oab;
-    public Client(long id, String nome, String cpf, Set<Address> addresses, Set<Contact> contacts, String urlPhoto, String role) {
+    public Client(long id, String nome, String cpf, Set<Address> addresses, Set<Contact> contacts, String urlPhoto, Role role) {
         super(id, nome, cpf, addresses, contacts, urlPhoto, role);
     }
 
