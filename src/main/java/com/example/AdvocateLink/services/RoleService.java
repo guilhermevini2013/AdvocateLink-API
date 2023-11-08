@@ -14,8 +14,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RoleService implements Iservice<RoleDTO> {
-    @Autowired
+
     private RoleRepository repository;
+    @Autowired
+    public RoleService(RoleRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public RoleDTO insert(RoleDTO roleDTO) {
