@@ -11,7 +11,6 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class RoleService implements Iservice<RoleDTO> {
 
     private RoleRepository repository;
+
     @Autowired
     public RoleService(RoleRepository repository) {
         this.repository = repository;
@@ -33,36 +33,37 @@ public class RoleService implements Iservice<RoleDTO> {
 
     @Override
     public void deleteById(Long id) {
-        try{
-            Role entity = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Id Not Found " +id));
+        try {
+            Role entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id Not Found " + id));
             repository.delete(entity);
-        }catch (DataIntegrityViolationException ex){
-            throw new DataBaseException("Role Used: "+ex.getMessage());
+        } catch (DataIntegrityViolationException ex) {
+            throw new DataBaseException("Role Used: " + ex.getMessage());
         }
     }
 
     @Override
     public RoleDTO update(Long id, RoleDTO roleDTO) {
-        try{
+        try {
             Role entity = repository.getReferenceById(id);
-            alterRole(roleDTO,entity);
+            alterRole(roleDTO, entity);
             return new RoleDTO(repository.save(entity));
-        }catch (EntityNotFoundException ex){
-            throw new ResourceNotFoundException("Id Not Found "+id);
+        } catch (EntityNotFoundException ex) {
+            throw new ResourceNotFoundException("Id Not Found " + id);
         }
     }
 
     @Override
     public Page<RoleDTO> list(Pageable pageable) {
-        return repository.findAll(pageable).map(x-> new RoleDTO(x));
+        return repository.findAll(pageable).map(x -> new RoleDTO(x));
     }
 
     @Override
     public RoleDTO findById(Long id) {
         return null;
     }
-    private void alterRole(RoleDTO roleDTO,Role role){
-        if (roleDTO.getNameRole()==null) throw new LackOfInformationException("Attributes Null");
+
+    private void alterRole(RoleDTO roleDTO, Role role) {
+        if (roleDTO.getNameRole() == null) throw new LackOfInformationException("Attributes Null");
         role.setNameRole(roleDTO.getNameRole());
     }
 }

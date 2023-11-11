@@ -1,4 +1,5 @@
 package com.example.AdvocateLink.service;
+
 import com.example.AdvocateLink.dto.RoleDTO;
 import com.example.AdvocateLink.models.Role;
 import com.example.AdvocateLink.repostories.RoleRepository;
@@ -40,6 +41,7 @@ public class RoleServiceTests {
     @Captor
     private ArgumentCaptor<Role> roleCaptor;
     private Page<Role> rolePage;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -57,50 +59,57 @@ public class RoleServiceTests {
         doThrow(EntityNotFoundException.class).when(roleRepository).getReferenceById(idNotExists);
         when(roleRepository.findAll((Pageable) any())).thenReturn(rolePage);
     }
+
     @Test
-    public void listShouldReturnPage(){
-        Pageable pageable = PageRequest.of(0,10);
+    public void listShouldReturnPage() {
+        Pageable pageable = PageRequest.of(0, 10);
         assertNotNull(roleService.list(pageable));
-        verify(roleRepository,times(1)).findAll(pageable);
+        verify(roleRepository, times(1)).findAll(pageable);
     }
+
     @Test
-    public void updateShouldThrowLackOfInformationExceptionAndNotAlterWhenAttributesIsNull(){
+    public void updateShouldThrowLackOfInformationExceptionAndNotAlterWhenAttributesIsNull() {
         roleDTO = Factory.createRoleDtoNullAttributes();
-        assertThrows(LackOfInformationException.class,()->roleService.update(idExists,roleDTO));
-        verify(roleRepository,never()).save(any());
+        assertThrows(LackOfInformationException.class, () -> roleService.update(idExists, roleDTO));
+        verify(roleRepository, never()).save(any());
     }
+
     @Test
-    public void updateShouldThrowResourceNotFoundExceptionAndNotAlterWhenIdNotExists(){
+    public void updateShouldThrowResourceNotFoundExceptionAndNotAlterWhenIdNotExists() {
         roleDTO.setNameRole("Hellow Word");
-        assertThrows(ResourceNotFoundException.class,()->roleService.update(idNotExists,roleDTO));
-        verify(roleRepository,never()).save(any());
+        assertThrows(ResourceNotFoundException.class, () -> roleService.update(idNotExists, roleDTO));
+        verify(roleRepository, never()).save(any());
     }
+
     @Test
-    public void updateShouldUpdateObjectAndSaveInDataBaseWhenIdExistsAndAllAttributesNotIsNull(){
+    public void updateShouldUpdateObjectAndSaveInDataBaseWhenIdExistsAndAllAttributesNotIsNull() {
         roleDTO.setNameRole("Hellow Word");
-        assertDoesNotThrow(()-> roleService.update(idExists,roleDTO));
-        verify(roleRepository,times(1)).getReferenceById(idExists);
-        verify(roleRepository,times(1)).save(roleCaptor.capture());
+        assertDoesNotThrow(() -> roleService.update(idExists, roleDTO));
+        verify(roleRepository, times(1)).getReferenceById(idExists);
+        verify(roleRepository, times(1)).save(roleCaptor.capture());
         Role roleCaptured = roleCaptor.getValue();
-        assertEquals(roleCaptured.getNameRole(),roleDTO.getNameRole());
+        assertEquals(roleCaptured.getNameRole(), roleDTO.getNameRole());
     }
+
     @Test
-    public void deleteByIdShouldReturnResourceNotFoundExceptionAndNotRemoveObjectInDataBaseWhenIdNotExists(){
-        assertThrows(ResourceNotFoundException.class,()->roleService.deleteById(idNotExists));
-        verify(roleRepository,times(1)).findById(idNotExists);
-        verify(roleRepository,never()).delete(any());
+    public void deleteByIdShouldReturnResourceNotFoundExceptionAndNotRemoveObjectInDataBaseWhenIdNotExists() {
+        assertThrows(ResourceNotFoundException.class, () -> roleService.deleteById(idNotExists));
+        verify(roleRepository, times(1)).findById(idNotExists);
+        verify(roleRepository, never()).delete(any());
     }
+
     @Test
-    public void deleteByIdShouldDeleteObjectInDateBaseAndNotReturnNeverExceptionWhenIdExists(){
+    public void deleteByIdShouldDeleteObjectInDateBaseAndNotReturnNeverExceptionWhenIdExists() {
         assertDoesNotThrow(() -> roleService.deleteById(idExists));
-        verify(roleRepository,times(1)).findById(idExists);
-        verify(roleRepository,times(1)).delete(any());
+        verify(roleRepository, times(1)).findById(idExists);
+        verify(roleRepository, times(1)).delete(any());
 
     }
+
     @Test
-    public void insertShouldInsertObjectInDataBase(){
+    public void insertShouldInsertObjectInDataBase() {
         roleDTO = roleService.insert(roleDTO);
-        Assertions.assertEquals(roleDTO.getId(),role.getId());
-        verify(roleRepository,times(1)).save(any());
+        Assertions.assertEquals(roleDTO.getId(), role.getId());
+        verify(roleRepository, times(1)).save(any());
     }
 }
