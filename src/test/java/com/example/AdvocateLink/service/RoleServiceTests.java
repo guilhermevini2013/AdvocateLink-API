@@ -103,7 +103,6 @@ public class RoleServiceTests {
         assertDoesNotThrow(() -> roleService.deleteById(idExists));
         verify(roleRepository, times(1)).findById(idExists);
         verify(roleRepository, times(1)).delete(any());
-
     }
 
     @Test

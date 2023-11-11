@@ -36,7 +36,7 @@ public class ExHandler {
     @ExceptionHandler(LackOfInformationException.class)
     public ResponseEntity<StandardError> lackInformation(LackOfInformationException e, HttpServletRequest request) {
         status = HttpStatus.BAD_REQUEST;
-        logger.error("Attributes Null");
+        logger.error(e.getMessage());
         return ResponseEntity.status(status).body(new StandardError(Instant.now(), status.value(), e.getMessage(), request.getServletPath()));
     }
 }
