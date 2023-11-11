@@ -47,13 +47,13 @@ public class ManageableService implements Iservice<ManageableDTO> {
 
     @Override
     @Transactional
-    public Boolean update(Long id, ManageableDTO manageableDTO) {
+    public ManageableDTO update(Long id, ManageableDTO manageableDTO) {
         try {
             Manageable entityReference = repository.getReferenceById(id);
             updateObject(manageableDTO, entityReference);
             repository.save(entityReference);
             logger.info("Manageable Updated");
-            return true;
+            return new ManageableDTO(entityReference);
         } catch (EntityNotFoundException | ObjectNotFoundException ex) {
             throw new ResourceNotFoundException("Id Not Found " + id);
         }

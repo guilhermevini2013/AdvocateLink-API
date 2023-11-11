@@ -8,7 +8,7 @@ public interface Iservice<T> {
 
     void deleteById(Long id);
 
-    Boolean update(Long id, T t);
+    T update(Long id, T t);
 
     Page<T> list(PageRequest pageRequest);
 
