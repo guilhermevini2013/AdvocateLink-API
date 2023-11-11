@@ -1,11 +1,9 @@
 package com.example.AdvocateLink.service;
-
 import com.example.AdvocateLink.dto.RoleDTO;
 import com.example.AdvocateLink.models.Role;
 import com.example.AdvocateLink.repostories.RoleRepository;
 import com.example.AdvocateLink.service.factory.Factory;
 import com.example.AdvocateLink.services.RoleService;
-import com.example.AdvocateLink.services.exceptions.DataBaseException;
 import com.example.AdvocateLink.services.exceptions.LackOfInformationException;
 import com.example.AdvocateLink.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,11 +13,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +39,7 @@ public class RoleServiceTests {
     private Long idNotExists;
     @Captor
     private ArgumentCaptor<Role> roleCaptor;
+    private Page<Role> rolePage;
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -48,12 +48,20 @@ public class RoleServiceTests {
         role = Factory.createRole();
         idExists = 1l;
         idNotExists = 2l;
+        rolePage = new PageImpl<>(List.of(role));
         when(roleRepository.save(any())).thenReturn(role);
         when(roleRepository.findById(idExists)).thenReturn(Optional.of(role));
         doNothing().when(roleRepository).delete(any());
         doThrow(ResourceNotFoundException.class).when(roleRepository).findById(idNotExists);
         when(roleRepository.getReferenceById(idExists)).thenReturn(role);
         doThrow(EntityNotFoundException.class).when(roleRepository).getReferenceById(idNotExists);
+        when(roleRepository.findAll((Pageable) any())).thenReturn(rolePage);
+    }
+    @Test
+    public void listShouldReturnPage(){
+        Pageable pageable = PageRequest.of(0,10);
+        assertNotNull(roleService.list(pageable));
+        verify(roleRepository,times(1)).findAll(pageable);
     }
     @Test
     public void updateShouldThrowLackOfInformationExceptionAndNotAlterWhenAttributesIsNull(){

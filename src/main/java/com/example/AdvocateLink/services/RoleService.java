@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -52,8 +53,8 @@ public class RoleService implements Iservice<RoleDTO> {
     }
 
     @Override
-    public Page<RoleDTO> list(PageRequest pageRequest) {
-        return null;
+    public Page<RoleDTO> list(Pageable pageable) {
+        return repository.findAll(pageable).map(x-> new RoleDTO(x));
     }
 
     @Override
