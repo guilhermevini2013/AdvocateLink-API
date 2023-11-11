@@ -2,6 +2,7 @@ package com.example.AdvocateLink.controllers.exceptions;
 
 import com.example.AdvocateLink.services.ManageableService;
 import com.example.AdvocateLink.services.exceptions.DataBaseException;
+import com.example.AdvocateLink.services.exceptions.LackOfInformationException;
 import com.example.AdvocateLink.services.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,6 +29,12 @@ public class ExHandler {
     public ResponseEntity<StandardError> DataBaseError(DataBaseException e, HttpServletRequest request){
         status = HttpStatus.INTERNAL_SERVER_ERROR;
         logger.error(e.getMessage());
+        return ResponseEntity.status(status).body(new StandardError(Instant.now(),status.value(),e.getMessage(), request.getServletPath()));
+    }
+    @ExceptionHandler(LackOfInformationException.class)
+    public ResponseEntity<StandardError> lackInformation(LackOfInformationException e, HttpServletRequest request){
+        status = HttpStatus.BAD_REQUEST;
+        logger.error("Attributes Null");
         return ResponseEntity.status(status).body(new StandardError(Instant.now(),status.value(),e.getMessage(), request.getServletPath()));
     }
 }
