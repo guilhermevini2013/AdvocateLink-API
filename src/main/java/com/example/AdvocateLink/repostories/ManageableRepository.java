@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface ManageableRepository extends JpaRepository<Manageable,Long> {
     @Query("SELECT SUM(e.salary) FROM Manageable e")
     Double sumAllSalary();
-
+    @Query("select count(*) from Manageable e where e.salary != 0.0")
+    Integer countEmployee();
 }

@@ -16,6 +16,6 @@ public class StatisticsOfEmployee {
 
     @Transactional(readOnly = true)
     public StatisticsEmployeeDTO statistics() {
-        return new StatisticsEmployeeDTO(repository.count(), repository.sumAllSalary());
+        return new StatisticsEmployeeDTO(repository.countEmployee(), repository.sumAllSalary());
     }
 }

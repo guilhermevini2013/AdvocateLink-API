@@ -4,6 +4,7 @@ import com.example.AdvocateLink.models.Address;
 import com.example.AdvocateLink.models.Contact;
 import com.example.AdvocateLink.models.Manageable;
 import com.example.AdvocateLink.models.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.util.HashSet;
@@ -14,6 +15,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ManageableDTO {
+    @JsonIgnore
     protected long id;
     protected String name;
     protected String cpf;

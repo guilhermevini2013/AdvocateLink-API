@@ -1,6 +1,7 @@
 package com.example.AdvocateLink.dto;
 
 import com.example.AdvocateLink.models.Address;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddressDTO {
+public class AddressDTO{
+    @JsonIgnore
     private Long id;
     private String street;
     private int number;

@@ -35,7 +35,7 @@ public class ManageableService implements Iservice<ManageableDTO> {
     @Transactional
     public ManageableDTO insert(ManageableDTO manageableDTO) {
         Manageable entity = repository.save(new Manageable(manageableDTO, manageableDTO.getAddressesDTO(), manageableDTO.getContactsDTO()));
-        logger.info("ManageableDTO Insert");
+        logger.info("Manageable Insert");
         return new ManageableDTO(entity, entity.getAddresses(), entity.getContacts());
     }
 
