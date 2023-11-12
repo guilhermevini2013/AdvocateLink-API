@@ -76,19 +76,19 @@ public class RoleServiceTests {
 
     @Test
     public void updateShouldThrowResourceNotFoundExceptionAndNotAlterWhenIdNotExists() {
-        roleDTO.setNameRole("Hellow Word");
+        roleDTO.setName_Role("Hellow Word");
         assertThrows(ResourceNotFoundException.class, () -> roleService.update(idNotExists, roleDTO));
         verify(roleRepository, never()).save(any());
     }
 
     @Test
     public void updateShouldUpdateObjectAndSaveInDataBaseWhenIdExistsAndAllAttributesNotIsNull() {
-        roleDTO.setNameRole("Hellow Word");
+        roleDTO.setName_Role("Hellow Word");
         assertDoesNotThrow(() -> roleService.update(idExists, roleDTO));
         verify(roleRepository, times(1)).getReferenceById(idExists);
         verify(roleRepository, times(1)).save(roleCaptor.capture());
         Role roleCaptured = roleCaptor.getValue();
-        assertEquals(roleCaptured.getNameRole(), roleDTO.getNameRole());
+        assertEquals(roleCaptured.getName_Role(), roleDTO.getName_Role());
     }
 
     @Test

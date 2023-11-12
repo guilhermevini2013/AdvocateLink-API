@@ -15,6 +15,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RoleService implements Iservice<RoleDTO> {
@@ -28,6 +29,7 @@ public class RoleService implements Iservice<RoleDTO> {
     }
 
     @Override
+    @Transactional
     public RoleDTO insert(RoleDTO roleDTO) {
         Role entity = new Role(roleDTO);
         entity = repository.save(entity);
@@ -36,6 +38,7 @@ public class RoleService implements Iservice<RoleDTO> {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         try {
             Role entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id Not Found " + id));
@@ -47,6 +50,7 @@ public class RoleService implements Iservice<RoleDTO> {
     }
 
     @Override
+    @Transactional
     public RoleDTO update(Long id, RoleDTO roleDTO) {
         try {
             Role entity = repository.getReferenceById(id);
@@ -59,18 +63,20 @@ public class RoleService implements Iservice<RoleDTO> {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<RoleDTO> list(Pageable pageable) {
         logger.info("Listed success");
         return repository.findAll(pageable).map(RoleDTO::new);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public RoleDTO findById(Long id) {
         return null;
     }
 
     private void alterRole(RoleDTO roleDTO, Role role) {
-        if (roleDTO.getNameRole() == null) throw new LackOfInformationException("Attributes Null");
-        role.setNameRole(roleDTO.getNameRole());
+        if (roleDTO.getName_Role() == null) throw new LackOfInformationException("Attributes Null");
+        role.setName_Role(roleDTO.getName_Role());
     }
 }

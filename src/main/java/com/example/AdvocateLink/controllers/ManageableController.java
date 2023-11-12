@@ -1,6 +1,8 @@
 package com.example.AdvocateLink.controllers;
 
+import com.example.AdvocateLink.components.StatisticsOfEmployee;
 import com.example.AdvocateLink.dto.ManageableDTO;
+import com.example.AdvocateLink.dto.StatisticsEmployeeDTO;
 import com.example.AdvocateLink.services.ManageableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,13 @@ import java.net.URI;
 public class ManageableController {
     @Autowired
     private ManageableService service;
+    @Autowired
+    private StatisticsOfEmployee statisticsOfEmployee;
+
+    @GetMapping(value = "/statisticsEmployee")
+    public ResponseEntity<StatisticsEmployeeDTO> statisticsEmployee(){
+        return ResponseEntity.ok(statisticsOfEmployee.statistics());
+    }
 
     @GetMapping
     public ResponseEntity<Page<ManageableDTO>> list(@RequestParam(name = "pages", defaultValue = "0") Integer pages,

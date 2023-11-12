@@ -17,14 +17,19 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ManageableService implements Iservice<ManageableDTO> {
     final private Logger logger = LoggerFactory.getLogger(ManageableService.class);
-    @Autowired
+
     private ManageableRepository repository;
+    @Autowired
+    public ManageableService(ManageableRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     @Transactional
