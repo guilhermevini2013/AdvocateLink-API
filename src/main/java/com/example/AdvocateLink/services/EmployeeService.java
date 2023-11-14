@@ -49,10 +49,10 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
 
     @Override
     @Transactional
-    public EmployeeDTO update(Long id, EmployeeDTO manageableDTO) {
+    public EmployeeDTO update(Long id, EmployeeDTO employeeDTO) {
         try {
             Employee entity = (Employee) repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not Found " + id));
-            updateObject(manageableDTO, entity);
+            updateObject(employeeDTO, entity);
             repository.save(entity);
             logger.info("Manageable Updated");
             return new EmployeeDTO(entity);
@@ -76,10 +76,10 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
         return new EmployeeDTO(entity, entity.getAddresses(), entity.getContacts());
     }
 
-    private void updateObject(EmployeeDTO dto, Employee manageable) {
-        manageable.setName(dto.getName());
-        manageable.setCpf(dto.getCpf());
-        manageable.setUrlPhoto(dto.getUrlPhoto());
-        manageable.setSalary(dto.getSalary());
+    private void updateObject(EmployeeDTO dto, Employee employee) {
+        employee.setName(dto.getName());
+        employee.setCpf(dto.getCpf());
+        employee.setUrlPhoto(dto.getUrlPhoto());
+        employee.setSalary(dto.getSalary());
     }
 }

@@ -27,12 +27,12 @@ public class Employee extends Manageable{
         this.salary = salary;
     }
 
-    public Employee(EmployeeDTO manageableDTO) {
-        super(manageableDTO.getId(), manageableDTO.getName(), manageableDTO.getCpf(), manageableDTO.getUrlPhoto(), manageableDTO.getRole_id());
-        this.salary=manageableDTO.getSalary();
+    public Employee(EmployeeDTO employeeDTO) {
+        super(employeeDTO.getId(), employeeDTO.getName(), employeeDTO.getCpf(), employeeDTO.getUrlPhoto(), employeeDTO.getRole_id());
+        this.salary=employeeDTO.getSalary();
     }
-    public Employee(EmployeeDTO manageableDTO, Set<AddressDTO> addressesDTO, Set<ContactDTO> contactsDTO){
-        this(manageableDTO);
+    public Employee(EmployeeDTO employeeDTO, Set<AddressDTO> addressesDTO, Set<ContactDTO> contactsDTO){
+        this(employeeDTO);
         addressesDTO.forEach(x-> super.addresses.add(new Address(x)));
         contactsDTO.forEach(x-> super.contacts.add(new Contact(x)));
     }

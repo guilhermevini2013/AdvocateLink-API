@@ -37,7 +37,7 @@ public class ManageableController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ManageableDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<EmployeeDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findById(id));
     }
 
