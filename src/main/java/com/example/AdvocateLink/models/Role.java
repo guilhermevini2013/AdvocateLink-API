@@ -15,7 +15,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "role")
 public class Role {
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

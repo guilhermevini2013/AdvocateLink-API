@@ -7,11 +7,11 @@ import com.example.AdvocateLink.models.Role;
 
 public class Factory {
     public static Manageable createManageable() {
-        return new Manageable(1l, "Henrique Cardoso", "123", null, null, "www", new Role(1l,"test"));
+        return null;
     }
 
     public static ManageableDTO createManageableDTO() {
-        return new ManageableDTO(createManageable());
+        return null;
     }
     public static Role createRole(){
         return new Role(1l,"Engenheiro");

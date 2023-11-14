@@ -1,6 +1,6 @@
 package com.example.AdvocateLink.controllers.exceptions;
 
-import com.example.AdvocateLink.services.ManageableService;
+import com.example.AdvocateLink.services.EmployeeService;
 import com.example.AdvocateLink.services.exceptions.DataBaseException;
 import com.example.AdvocateLink.services.exceptions.LackOfInformationException;
 import com.example.AdvocateLink.services.exceptions.ResourceNotFoundException;
@@ -16,7 +16,7 @@ import java.time.Instant;
 
 @ControllerAdvice
 public class ExHandler {
-    final private Logger logger = LoggerFactory.getLogger(ManageableService.class);
+    final private Logger logger = LoggerFactory.getLogger(EmployeeService.class);
     private HttpStatus status;
 
     @ExceptionHandler(ResourceNotFoundException.class)

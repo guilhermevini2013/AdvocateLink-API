@@ -1,10 +1,10 @@
 insert into role(name_Role)values ('teste');
-insert into MANAGEABLE (SALARY,DTYPE,CPF ,NAME ,OAB ,URL_PHOTO,role_id ) values(100,'123','123','guilherme vinicius','123','123',1);
+insert into MANAGEABLE (SALARY,DTYPE,CPF ,NAME ,OAB ,URL_PHOTO,role_id ) values(100,'Employee','123','guilherme vinicius','123','123',1);
 insert INTO ADDRESS(number,burgh,street)values (10,'test','teste');
 insert into CONTACT(telephone,email)values ('123','123');
 insert into MANAGEABLE_AND_ADDRESS values (1,1);
 insert into MANAGEABLE_AND_CONTACT values (1,1);
-insert into MANAGEABLE (SALARY,DTYPE,CPF ,NAME ,OAB ,URL_PHOTO,role_id ) values(100,'123','123','Eduardo','123','123',1);
+insert into MANAGEABLE (SALARY,DTYPE,CPF ,NAME ,OAB ,URL_PHOTO,role_id ) values(100,'Employee','123','Eduardo','123','123',1);
 insert INTO ADDRESS(number,burgh,street)values (10,'test','teste');
 insert into CONTACT(telephone,email)values ('123','123');
 insert into MANAGEABLE_AND_ADDRESS values (2,2);

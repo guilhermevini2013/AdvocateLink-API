@@ -1,10 +1,6 @@
 package com.example.AdvocateLink.models;
 
 
-import com.example.AdvocateLink.dto.AddressDTO;
-import com.example.AdvocateLink.dto.ContactDTO;
-import com.example.AdvocateLink.dto.ManageableDTO;
-import com.example.AdvocateLink.dto.RoleDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,7 +16,8 @@ import java.util.Set;
 @Entity
 @Setter
 @Table(name = "manageable")
-public class Manageable {
+@DiscriminatorColumn(name = "Dtype")
+public abstract class Manageable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -37,41 +34,15 @@ public class Manageable {
             inverseJoinColumns = @JoinColumn(name = "contacts_id"))
     protected Set<Contact> contacts = new HashSet<>();
     protected String urlPhoto;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "role_id")
     protected Role role_Id;
-    protected double salary;
 
-    public Manageable(Long id, String nome, String cpf, Set<Address> addresses, Set<Contact> contacts, String urlPhoto, Role role) {
+    public Manageable(Long id, String name, String cpf, String urlPhoto, Role role_id) {
         this.id = id;
-        this.name = nome;
+        this.name = name;
         this.cpf = cpf;
-        this.addresses = addresses;
-        this.contacts = contacts;
         this.urlPhoto = urlPhoto;
-        this.role_Id = role;
-    }
-
-    public Manageable(ManageableDTO entityDTO) {
-        this.id = entityDTO.getId();
-        this.name = entityDTO.getName();
-        this.cpf = entityDTO.getCpf();
-        this.urlPhoto = entityDTO.getUrlPhoto();
-        this.role_Id = entityDTO.getRole_id();
-        this.salary = entityDTO.getSalary();
-    }
-
-    public Manageable(ManageableDTO manageableDTO, Set<AddressDTO> addressesDTO, Set<ContactDTO> contactsDTO) {
-        this(manageableDTO);
-        addressesDTO.forEach(x -> addresses.add(new Address(x)));
-        contactsDTO.forEach(x -> contacts.add(new Contact(x)));
-    }
-
-    public void addAddresses(AddressDTO addressDTO) {
-        addresses.add(new Address(addressDTO));
-    }
-
-    public void addContact(ContactDTO contactDTO) {
-        contacts.add(new Contact(contactDTO));
+        this.role_Id = role_id;
     }
 }

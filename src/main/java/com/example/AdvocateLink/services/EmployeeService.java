@@ -1,9 +1,7 @@
 package com.example.AdvocateLink.services;
 
-import com.example.AdvocateLink.dto.AddressDTO;
-import com.example.AdvocateLink.dto.ManageableDTO;
-import com.example.AdvocateLink.models.Address;
-import com.example.AdvocateLink.models.Manageable;
+import com.example.AdvocateLink.dto.EmployeeDTO;
+import com.example.AdvocateLink.models.Employee;
 import com.example.AdvocateLink.repostories.ManageableRepository;
 import com.example.AdvocateLink.services.exceptions.DataBaseException;
 import com.example.AdvocateLink.services.exceptions.ResourceNotFoundException;
@@ -15,35 +13,33 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class ManageableService implements Iservice<ManageableDTO> {
-    final private Logger logger = LoggerFactory.getLogger(ManageableService.class);
+public class EmployeeService implements Iservice<EmployeeDTO> {
+    final private Logger logger = LoggerFactory.getLogger(EmployeeService.class);
 
     private ManageableRepository repository;
     @Autowired
-    public ManageableService(ManageableRepository repository) {
+    public EmployeeService(ManageableRepository repository) {
         this.repository = repository;
     }
 
     @Override
     @Transactional
-    public ManageableDTO insert(ManageableDTO manageableDTO) {
-        Manageable entity = repository.save(new Manageable(manageableDTO, manageableDTO.getAddressesDTO(), manageableDTO.getContactsDTO()));
+    public EmployeeDTO insert(EmployeeDTO employeeDTO) {
+        Employee entity = repository.save(new Employee(employeeDTO, employeeDTO.getAddressesDTO(), employeeDTO.getContactsDTO()));
         logger.info("Manageable Insert");
-        return new ManageableDTO(entity, entity.getAddresses(), entity.getContacts());
+        return new EmployeeDTO(entity, entity.getAddresses(), entity.getContacts());
     }
 
     @Override
     @Transactional
     public void deleteById(Long id) {
         try {
-            Manageable entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not Found " + id));
+            Employee entity = (Employee) repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not Found " + id));
             repository.delete(entity);
             logger.info("Delete Id " + id);
         } catch (DataIntegrityViolationException ex) {
@@ -53,13 +49,13 @@ public class ManageableService implements Iservice<ManageableDTO> {
 
     @Override
     @Transactional
-    public ManageableDTO update(Long id, ManageableDTO manageableDTO) {
+    public EmployeeDTO update(Long id, EmployeeDTO manageableDTO) {
         try {
-            Manageable entityReference = repository.getReferenceById(id);
-            updateObject(manageableDTO, entityReference);
-            repository.save(entityReference);
+            Employee entity = (Employee) repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not Found " + id));
+            updateObject(manageableDTO, entity);
+            repository.save(entity);
             logger.info("Manageable Updated");
-            return new ManageableDTO(entityReference);
+            return new EmployeeDTO(entity);
         } catch (EntityNotFoundException | ObjectNotFoundException ex) {
             throw new ResourceNotFoundException("Id Not Found " + id);
         }
@@ -67,24 +63,23 @@ public class ManageableService implements Iservice<ManageableDTO> {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ManageableDTO> list(Pageable Pageable) {
+    public Page<EmployeeDTO> list(Pageable pageable) {
         logger.info("Page<ManageableDTO> Listed");
-        return repository.findAll(Pageable).map(x -> new ManageableDTO(x, x.getAddresses(), x.getContacts()));
+        return repository.findAllEmployees(pageable).map(x -> new EmployeeDTO((Employee) x, x.getAddresses(), x.getContacts()));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public ManageableDTO findById(Long id) {
-        Manageable entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id Not Found " + id));
+    public EmployeeDTO findById(Long id) {
+        Employee entity = (Employee) repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id Not Found " + id));
         logger.info("Manageable Found");
-        return new ManageableDTO(entity, entity.getAddresses(), entity.getContacts());
+        return new EmployeeDTO(entity, entity.getAddresses(), entity.getContacts());
     }
 
-    private void updateObject(ManageableDTO dto, Manageable manageable) {
+    private void updateObject(EmployeeDTO dto, Employee manageable) {
         manageable.setName(dto.getName());
-        manageable.setRole_Id(dto.getRole_id());
         manageable.setCpf(dto.getCpf());
-        manageable.setSalary(dto.getSalary());
         manageable.setUrlPhoto(dto.getUrlPhoto());
+        manageable.setSalary(dto.getSalary());
     }
 }

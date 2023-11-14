@@ -1,9 +1,10 @@
 package com.example.AdvocateLink.controllers;
 
 import com.example.AdvocateLink.components.StatisticsOfEmployee;
+import com.example.AdvocateLink.dto.EmployeeDTO;
 import com.example.AdvocateLink.dto.ManageableDTO;
 import com.example.AdvocateLink.dto.StatisticsEmployeeDTO;
-import com.example.AdvocateLink.services.ManageableService;
+import com.example.AdvocateLink.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +19,7 @@ import java.net.URI;
 @RequestMapping(value = "/advocateLink/api/v1/manageable")
 public class ManageableController {
     @Autowired
-    private ManageableService service;
+    private EmployeeService service;
     @Autowired
     private StatisticsOfEmployee statisticsOfEmployee;
 
@@ -28,10 +29,10 @@ public class ManageableController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ManageableDTO>> list(@RequestParam(name = "pages", defaultValue = "0") Integer pages,
-                                                    @RequestParam(name = "linesPerPages", defaultValue = "15") Integer linesPerPages,
-                                                    @RequestParam(name = "direction", defaultValue = "ASC") String direction,
-                                                    @RequestParam(name = "orderBy", defaultValue = "name") String orderBy) {
+    public ResponseEntity<Page<EmployeeDTO>> list(@RequestParam(name = "pages", defaultValue = "0") Integer pages,
+                                                  @RequestParam(name = "linesPerPages", defaultValue = "15") Integer linesPerPages,
+                                                  @RequestParam(name = "direction", defaultValue = "ASC") String direction,
+                                                  @RequestParam(name = "orderBy", defaultValue = "name") String orderBy) {
         return ResponseEntity.ok(service.list(PageRequest.of(pages, linesPerPages, Sort.Direction.valueOf(direction), orderBy)));
     }
 
@@ -47,14 +48,14 @@ public class ManageableController {
     }
 
     @PostMapping
-    public ResponseEntity<ManageableDTO> insert(@RequestBody ManageableDTO manageableDTO) {
-        manageableDTO = service.insert(manageableDTO);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(manageableDTO.getId()).toUri();
-        return ResponseEntity.created(uri).body(manageableDTO);
+    public ResponseEntity<EmployeeDTO> insert(@RequestBody EmployeeDTO employeeDTO) {
+        employeeDTO = service.insert(employeeDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(employeeDTO.getId()).toUri();
+        return ResponseEntity.created(uri).body(employeeDTO);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ManageableDTO manageableDTO) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody EmployeeDTO manageableDTO) {
         service.update(id, manageableDTO);
         return ResponseEntity.ok().build();
     }
