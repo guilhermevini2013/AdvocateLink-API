@@ -35,7 +35,7 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
     public EmployeeDTO insert(EmployeeDTO employeeDTO) {
         Employee entity = new Employee(employeeDTO, employeeDTO.getAddressesDTO(), employeeDTO.getContactsDTO());
         entity= repository.save(entity);
-        logger.info("Manageable Insert");
+        logger.info("Employee Inserted");
         return new EmployeeDTO(entity, entity.getAddresses(), entity.getContacts());
     }
 
@@ -58,7 +58,7 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
             Employee entity = (Employee) repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not Found " + id));
             updateObject(employeeDTO, entity);
             repository.save(entity);
-            logger.info("Manageable Updated");
+            logger.info("Employee Updated");
             return new EmployeeDTO(entity);
         } catch (EntityNotFoundException | ObjectNotFoundException ex) {
             throw new ResourceNotFoundException("Id Not Found " + id);
@@ -76,7 +76,7 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
     @Transactional(readOnly = true)
     public EmployeeDTO findById(Long id) {
         Employee entity = (Employee) repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id Not Found " + id));
-        logger.info("Manageable Found");
+        logger.info("Employee Found");
         return new EmployeeDTO(entity, entity.getAddresses(), entity.getContacts());
     }
 

@@ -1,4 +1,4 @@
-package com.example.AdvocateLink.controllers.exceptions;
+package com.example.AdvocateLink.controllers.handler;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

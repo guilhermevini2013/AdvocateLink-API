@@ -13,7 +13,7 @@ public interface Iservice<T> {
     @Transactional
     T update(Long id, T t);
     @Transactional(readOnly = true)
-    Page<T> list(Pageable Pageable);
+    Page<T> list(Pageable pageable);
     @Transactional(readOnly = true)
     T findById(Long id);
 }

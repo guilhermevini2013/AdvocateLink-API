@@ -1,4 +1,4 @@
-package com.example.AdvocateLink.controllers.exceptions;
+package com.example.AdvocateLink.controllers.handler;
 
 import com.example.AdvocateLink.services.EmployeeService;
 import com.example.AdvocateLink.services.exceptions.DataBaseException;
