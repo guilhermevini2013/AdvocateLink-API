@@ -1,12 +1,7 @@
 package com.example.AdvocateLink.services;
 
-import com.example.AdvocateLink.dto.AddressDTO;
-import com.example.AdvocateLink.dto.ContactDTO;
 import com.example.AdvocateLink.dto.EmployeeDTO;
-import com.example.AdvocateLink.models.Address;
-import com.example.AdvocateLink.models.Contact;
 import com.example.AdvocateLink.models.Employee;
-import com.example.AdvocateLink.repostories.AddressRepository;
 import com.example.AdvocateLink.repostories.ManageableRepository;
 import com.example.AdvocateLink.services.exceptions.DataBaseException;
 import com.example.AdvocateLink.services.exceptions.ResourceNotFoundException;
@@ -22,21 +17,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 @Service
 public class EmployeeService implements Iservice<EmployeeDTO> {
     final private Logger logger = LoggerFactory.getLogger(EmployeeService.class);
 
     private ManageableRepository repository;
-    private AddressRepository addressRepository;
     @Autowired
-    public EmployeeService(ManageableRepository repository, AddressRepository addressRepository) {
+    public EmployeeService(ManageableRepository repository) {
         this.repository = repository;
-        this.addressRepository = addressRepository;
     }
 
     @Override
