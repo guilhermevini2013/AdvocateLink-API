@@ -18,6 +18,8 @@ public class Contact {
     private Long id;
     private String email;
     private Long telephone;
+    @ManyToOne
+    private Manageable manageable;
     public Contact(ContactDTO contactDTO){
         this.id = contactDTO.getId();
         this.email = contactDTO.getEmail();

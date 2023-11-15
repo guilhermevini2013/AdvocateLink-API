@@ -19,6 +19,9 @@ public class Address {
     private String street;
     private int number;
     private String burgh;
+    @ManyToOne
+    @JoinColumn()
+    private Manageable manageable;
     public Address(AddressDTO addressDTO){
         this.id = addressDTO.getId();
         this.street = addressDTO.getStreet();

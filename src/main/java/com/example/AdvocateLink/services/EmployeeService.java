@@ -1,7 +1,12 @@
 package com.example.AdvocateLink.services;
 
+import com.example.AdvocateLink.dto.AddressDTO;
+import com.example.AdvocateLink.dto.ContactDTO;
 import com.example.AdvocateLink.dto.EmployeeDTO;
+import com.example.AdvocateLink.models.Address;
+import com.example.AdvocateLink.models.Contact;
 import com.example.AdvocateLink.models.Employee;
+import com.example.AdvocateLink.repostories.AddressRepository;
 import com.example.AdvocateLink.repostories.ManageableRepository;
 import com.example.AdvocateLink.services.exceptions.DataBaseException;
 import com.example.AdvocateLink.services.exceptions.ResourceNotFoundException;
@@ -17,20 +22,29 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Service
 public class EmployeeService implements Iservice<EmployeeDTO> {
     final private Logger logger = LoggerFactory.getLogger(EmployeeService.class);
 
     private ManageableRepository repository;
+    private AddressRepository addressRepository;
     @Autowired
-    public EmployeeService(ManageableRepository repository) {
+    public EmployeeService(ManageableRepository repository, AddressRepository addressRepository) {
         this.repository = repository;
+        this.addressRepository = addressRepository;
     }
 
     @Override
     @Transactional
     public EmployeeDTO insert(EmployeeDTO employeeDTO) {
-        Employee entity = repository.save(new Employee(employeeDTO, employeeDTO.getAddressesDTO(), employeeDTO.getContactsDTO()));
+        Employee entity = new Employee(employeeDTO, employeeDTO.getAddressesDTO(), employeeDTO.getContactsDTO());
+        copyDTOtoEntity(employeeDTO,entity);
+        entity= repository.save(entity);
         logger.info("Manageable Insert");
         return new EmployeeDTO(entity, entity.getAddresses(), entity.getContacts());
     }
@@ -81,5 +95,26 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
         employee.setCpf(dto.getCpf());
         employee.setUrlPhoto(dto.getUrlPhoto());
         employee.setSalary(dto.getSalary());
+    }
+    private void copyDTOtoEntity(EmployeeDTO dto, Employee entity){
+        entity.setName(dto.getName());
+        entity.setSalary(dto.getSalary());
+        entity.setCpf(dto.getCpf());
+        entity.setUrlPhoto(dto.getUrlPhoto());
+        entity.setRole_Id(dto.getRole_id());
+        Set<Address> addresses = new HashSet<>();
+        for (AddressDTO addressDTO : dto.getAddressesDTO()) {
+            Address address = new Address(addressDTO);
+            address.setManageable(entity);
+            addresses.add(address);
+        }
+        entity.setAddresses(addresses);
+        Set<Contact> contacts = new HashSet<>();
+        for (ContactDTO contactDTO : dto.getContactsDTO()) {
+            Contact contact = new Contact(contactDTO);
+            contact.setManageable(entity);
+            contacts.add(contact);
+        }
+        entity.setContacts(contacts);
     }
 }

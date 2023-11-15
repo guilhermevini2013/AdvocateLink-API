@@ -23,15 +23,9 @@ public abstract class Manageable {
     protected Long id;
     protected String name;
     protected String cpf;
-    @ManyToMany
-    @JoinTable(name = "manageable_and_Address",
-            joinColumns = @JoinColumn(name = "manageable_id"),
-            inverseJoinColumns = @JoinColumn(name = "address_id"))
+    @OneToMany(mappedBy = "manageable", cascade = CascadeType.ALL)
     protected Set<Address> addresses = new HashSet<>();
-    @ManyToMany
-    @JoinTable(name = "manageable_and_Contact",
-            joinColumns = @JoinColumn(name = "manageable_id"),
-            inverseJoinColumns = @JoinColumn(name = "contacts_id"))
+    @OneToMany(mappedBy = "manageable", cascade = CascadeType.ALL)
     protected Set<Contact> contacts = new HashSet<>();
     protected String urlPhoto;
     @ManyToOne(cascade = CascadeType.PERSIST)

@@ -15,7 +15,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class ManageableDTO {
-    @JsonIgnore
     protected long id;
     protected String name;
     protected String cpf;

@@ -2,7 +2,6 @@ package com.example.AdvocateLink.controllers;
 
 import com.example.AdvocateLink.components.StatisticsOfEmployee;
 import com.example.AdvocateLink.dto.EmployeeDTO;
-import com.example.AdvocateLink.dto.ManageableDTO;
 import com.example.AdvocateLink.dto.StatisticsEmployeeDTO;
 import com.example.AdvocateLink.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +15,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping(value = "/advocateLink/api/v1/manageable")
-public class ManageableController {
+@RequestMapping(value = "/advocateLink/api/v1/employee")
+public class EmployeeController {
     @Autowired
     private EmployeeService service;
     @Autowired
     private StatisticsOfEmployee statisticsOfEmployee;
 
-    @GetMapping(value = "/statisticsEmployee")
+    @GetMapping(value = "/statistics")
     public ResponseEntity<StatisticsEmployeeDTO> statisticsEmployee(){
         return ResponseEntity.ok(statisticsOfEmployee.statistics());
     }
