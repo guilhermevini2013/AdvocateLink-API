@@ -25,4 +25,9 @@ public class ClientController {
     public ResponseEntity<ClientDTO> findByid(@PathVariable Long id){
         return ResponseEntity.ok(clientService.findById(id));
     }
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        clientService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -1,6 +1,6 @@
 package com.example.AdvocateLink.controllers;
 
-import com.example.AdvocateLink.components.StatisticsOfEmployee;
+import com.example.AdvocateLink.components.Statistics;
 import com.example.AdvocateLink.dto.EmployeeDTO;
 import com.example.AdvocateLink.dto.StatisticsEmployeeDTO;
 import com.example.AdvocateLink.services.EmployeeService;
@@ -20,11 +20,11 @@ public class EmployeeController {
     @Autowired
     private EmployeeService service;
     @Autowired
-    private StatisticsOfEmployee statisticsOfEmployee;
+    private Statistics statistics;
 
     @GetMapping(value = "/statistics")
     public ResponseEntity<StatisticsEmployeeDTO> statisticsEmployee(){
-        return ResponseEntity.ok(statisticsOfEmployee.statistics());
+        return ResponseEntity.ok(statistics.statistics());
     }
 
     @GetMapping

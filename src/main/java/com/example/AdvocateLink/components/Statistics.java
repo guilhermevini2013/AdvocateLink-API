@@ -7,10 +7,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-public class StatisticsOfEmployee {
+public class Statistics {
     private ManageableRepository repository;
     @Autowired
-    public StatisticsOfEmployee(ManageableRepository repository) {
+    public Statistics(ManageableRepository repository) {
         this.repository = repository;
     }
 
