@@ -43,7 +43,6 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
     @Transactional
     public EmployeeDTO insert(EmployeeDTO employeeDTO) {
         Employee entity = new Employee(employeeDTO, employeeDTO.getAddressesDTO(), employeeDTO.getContactsDTO());
-        copyDTOtoEntity(employeeDTO,entity);
         entity= repository.save(entity);
         logger.info("Manageable Insert");
         return new EmployeeDTO(entity, entity.getAddresses(), entity.getContacts());
@@ -95,26 +94,5 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
         employee.setCpf(dto.getCpf());
         employee.setUrlPhoto(dto.getUrlPhoto());
         employee.setSalary(dto.getSalary());
-    }
-    private void copyDTOtoEntity(EmployeeDTO dto, Employee entity){
-        entity.setName(dto.getName());
-        entity.setSalary(dto.getSalary());
-        entity.setCpf(dto.getCpf());
-        entity.setUrlPhoto(dto.getUrlPhoto());
-        entity.setRole_Id(dto.getRole_id());
-        Set<Address> addresses = new HashSet<>();
-        for (AddressDTO addressDTO : dto.getAddressesDTO()) {
-            Address address = new Address(addressDTO);
-            address.setManageable(entity);
-            addresses.add(address);
-        }
-        entity.setAddresses(addresses);
-        Set<Contact> contacts = new HashSet<>();
-        for (ContactDTO contactDTO : dto.getContactsDTO()) {
-            Contact contact = new Contact(contactDTO);
-            contact.setManageable(entity);
-            contacts.add(contact);
-        }
-        entity.setContacts(contacts);
     }
 }

@@ -20,9 +20,10 @@ public class Contact {
     private Long telephone;
     @ManyToOne
     private Manageable manageable;
-    public Contact(ContactDTO contactDTO){
+    public Contact(ContactDTO contactDTO, Manageable entity){
         this.id = contactDTO.getId();
         this.email = contactDTO.getEmail();
         this.telephone = contactDTO.getTelephone();
+        this.manageable = entity;
     }
 }

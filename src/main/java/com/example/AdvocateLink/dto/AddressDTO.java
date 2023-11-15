@@ -1,6 +1,7 @@
 package com.example.AdvocateLink.dto;
 
 import com.example.AdvocateLink.models.Address;
+import com.example.AdvocateLink.models.Manageable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

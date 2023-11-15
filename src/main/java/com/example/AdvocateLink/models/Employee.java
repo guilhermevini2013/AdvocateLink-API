@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -33,7 +34,7 @@ public class Employee extends Manageable{
     }
     public Employee(EmployeeDTO employeeDTO, Set<AddressDTO> addressesDTO, Set<ContactDTO> contactsDTO){
         this(employeeDTO);
-        addressesDTO.forEach(x-> super.addresses.add(new Address(x)));
-        contactsDTO.forEach(x-> super.contacts.add(new Contact(x)));
+        addressesDTO.forEach(x-> this.getAddresses().add(new Address(x,this)));
+        contactsDTO.forEach(x->this.getContacts().add(new Contact(x,this)));
     }
 }

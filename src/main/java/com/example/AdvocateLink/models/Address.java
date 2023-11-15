@@ -20,12 +20,12 @@ public class Address {
     private int number;
     private String burgh;
     @ManyToOne
-    @JoinColumn()
     private Manageable manageable;
-    public Address(AddressDTO addressDTO){
+    public Address(AddressDTO addressDTO, Manageable entity){
         this.id = addressDTO.getId();
         this.street = addressDTO.getStreet();
         this.number = addressDTO.getNumber();
         this.burgh = addressDTO.getStreet();
+        this.manageable = entity;
     }
 }
