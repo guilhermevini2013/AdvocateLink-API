@@ -1,6 +1,7 @@
 package com.example.AdvocateLink.models;
 
 
+import com.example.AdvocateLink.dto.AddressDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

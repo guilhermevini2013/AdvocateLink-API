@@ -1,6 +1,7 @@
 package com.example.AdvocateLink.services;
 
 import com.example.AdvocateLink.dto.EmployeeDTO;
+import com.example.AdvocateLink.models.Address;
 import com.example.AdvocateLink.models.Employee;
 import com.example.AdvocateLink.repostories.ManageableRepository;
 import com.example.AdvocateLink.services.exceptions.DataBaseException;
@@ -16,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 @Service
 public class EmployeeService implements Iservice<EmployeeDTO> {
@@ -65,7 +68,7 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
     @Override
     @Transactional(readOnly = true)
     public Page<EmployeeDTO> list(Pageable pageable) {
-        logger.info("Page<ManageableDTO> Listed");
+        logger.info("Page Listed");
         return repository.findAllEmployees(pageable).map(x -> new EmployeeDTO((Employee) x, x.getAddresses(), x.getContacts()));
     }
 
