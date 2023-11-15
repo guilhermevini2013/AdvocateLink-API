@@ -75,7 +75,7 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
     @Override
     @Transactional(readOnly = true)
     public EmployeeDTO findById(Long id) {
-        Employee entity = (Employee) repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id Not Found " + id));
+        Employee entity = repository.findEmployeeById(id).orElseThrow(() -> new ResourceNotFoundException("Id Not Found " + id));
         logger.info("Employee Found");
         return new EmployeeDTO(entity, entity.getAddresses(), entity.getContacts());
     }

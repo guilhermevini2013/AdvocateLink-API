@@ -10,6 +10,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ManageableRepository extends JpaRepository<Manageable,Long> {
     @Query("SELECT SUM(e.salary) FROM Manageable e where TYPE(e) = Employee")
@@ -20,4 +22,8 @@ public interface ManageableRepository extends JpaRepository<Manageable,Long> {
     Page<Employee> findAllEmployees(Pageable pageable);
     @Query("SELECT e FROM Manageable e WHERE TYPE(e) = Client")
     Page<Client> findAllClient(Pageable pageable);
+    @Query("SELECT e from Manageable e where type(e) = Employee and e.id=:id")
+    Optional<Employee> findEmployeeById(Long id);
+    @Query("SELECT e from Manageable e where type(e) = Client and e.id=:id")
+    Optional<Client> findClientById(Long id);
 }

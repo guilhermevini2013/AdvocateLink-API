@@ -38,6 +38,7 @@ public class ClientService implements Iservice<ClientDTO> {
         try{
             Client entity = (Client) repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Id Not Found "+id));
             repository.delete(entity);
+            logger.info("Client Deleted");
         }catch (DataIntegrityViolationException ex){
             throw new DataBaseException("Integrity Violation");
         }
@@ -52,12 +53,15 @@ public class ClientService implements Iservice<ClientDTO> {
     @Override
     @Transactional(readOnly = true)
     public Page<ClientDTO> list(Pageable pageable) {
+        logger.info("Page Listed");
         return repository.findAllClient(pageable).map(x-> new ClientDTO(x,x.getAddresses(),x.getContacts()));
     }
 
     @Override
     @Transactional(readOnly = true)
     public ClientDTO findById(Long id) {
-        return null;
+        Client entity = repository.findClientById(id).orElseThrow(()-> new ResourceNotFoundException("Id Not Found "+id));
+        logger.info("Client found");
+        return new ClientDTO(entity,entity.getAddresses(),entity.getContacts());
     }
 }

@@ -7,10 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/advocateLink/api/v1/client")
@@ -23,5 +20,9 @@ public class ClientController {
                                                 @RequestParam(name = "direction",defaultValue = "ASC")String direction,
                                                 @RequestParam(name = "orderBy",defaultValue = "name")String orderBy){
         return ResponseEntity.ok(clientService.list(PageRequest.of(page,linesPerPage, Sort.Direction.valueOf(direction),orderBy)));
+    }
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ClientDTO> findByid(@PathVariable Long id){
+        return ResponseEntity.ok(clientService.findById(id));
     }
 }
