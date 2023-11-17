@@ -43,7 +43,7 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
     @Transactional
     public void deleteById(Long id) {
         try {
-            Employee entity = (Employee) repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not Found " + id));
+            Employee entity = repository.findEmployeeById(id).orElseThrow(() -> new ResourceNotFoundException("Id not Found " + id));
             repository.delete(entity);
             logger.info("Delete Id " + id);
         } catch (DataIntegrityViolationException ex) {
@@ -55,7 +55,7 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
     @Transactional
     public EmployeeDTO update(Long id, EmployeeDTO employeeDTO) {
         try {
-            Employee entity = (Employee) repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Id not Found " + id));
+            Employee entity = repository.findEmployeeById(id).orElseThrow(() -> new ResourceNotFoundException("Id not Found " + id));
             updateObject(employeeDTO, entity);
             repository.save(entity);
             logger.info("Employee Updated");
