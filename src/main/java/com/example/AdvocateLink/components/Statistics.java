@@ -1,5 +1,6 @@
 package com.example.AdvocateLink.components;
 
+import com.example.AdvocateLink.dto.StatisticsClientDTO;
 import com.example.AdvocateLink.dto.StatisticsEmployeeDTO;
 import com.example.AdvocateLink.repostories.ManageableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,11 @@ public class Statistics {
     }
 
     @Transactional(readOnly = true)
-    public StatisticsEmployeeDTO statistics() {
+    public StatisticsEmployeeDTO getStatisticsEmployee() {
         return new StatisticsEmployeeDTO(repository.countEmployee(), repository.sumAllSalary());
+    }
+    @Transactional(readOnly = true)
+    public StatisticsClientDTO getStatisticsClient(){
+        return new StatisticsClientDTO(repository.countClients());
     }
 }

@@ -18,6 +18,8 @@ public interface ManageableRepository extends JpaRepository<Manageable,Long> {
     Double sumAllSalary();
     @Query("select count(*) from Manageable e where TYPE(e) = Employee")
     Integer countEmployee();
+    @Query("select count(*) from Manageable e where TYPE(e) = Client")
+    Integer countClients();
     @Query("SELECT e FROM Manageable e WHERE TYPE(e) = Employee")
     Page<Employee> findAllEmployees(Pageable pageable);
     @Query("SELECT e FROM Manageable e WHERE TYPE(e) = Client")

@@ -8,6 +8,8 @@ import com.example.AdvocateLink.services.exceptions.LackOfInformationException;
 import com.example.AdvocateLink.services.exceptions.ResourceNotFoundException;
 import com.example.AdvocateLink.services.interfaces.Iservice;
 import jakarta.persistence.EntityNotFoundException;
+import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 @Service
 public class RoleService implements Iservice<RoleDTO> {
@@ -45,7 +50,7 @@ public class RoleService implements Iservice<RoleDTO> {
             repository.delete(entity);
             logger.info(id+" deleted success");
         } catch (DataIntegrityViolationException ex) {
-            throw new DataBaseException("Role Used: " + ex.getMessage());
+            throw new DataBaseException("Role Used");
         }
     }
 

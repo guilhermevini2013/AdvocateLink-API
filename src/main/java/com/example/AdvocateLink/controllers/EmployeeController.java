@@ -24,7 +24,7 @@ public class EmployeeController {
 
     @GetMapping(value = "/statistics")
     public ResponseEntity<StatisticsEmployeeDTO> statisticsEmployee(){
-        return ResponseEntity.ok(statistics.statistics());
+        return ResponseEntity.ok(statistics.getStatisticsEmployee());
     }
 
     @GetMapping
