@@ -5,6 +5,7 @@ import com.example.AdvocateLink.models.Address;
 import com.example.AdvocateLink.models.Employee;
 import com.example.AdvocateLink.repostories.ManageableRepository;
 import com.example.AdvocateLink.services.exceptions.DataBaseException;
+import com.example.AdvocateLink.services.exceptions.LackOfInformationException;
 import com.example.AdvocateLink.services.exceptions.ResourceNotFoundException;
 import com.example.AdvocateLink.services.interfaces.Iservice;
 import jakarta.persistence.EntityNotFoundException;
@@ -81,6 +82,7 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
     }
 
     private void updateObject(EmployeeDTO dto, Employee employee) {
+        if (dto.getSalary()==0.0|| dto.getName().isEmpty()||dto.getRole_id()==null||dto.getCpf().isEmpty()|| dto.getUrlPhoto().isEmpty()) throw new LackOfInformationException("Attributes Null");
         employee.setName(dto.getName());
         employee.setCpf(dto.getCpf());
         employee.setUrlPhoto(dto.getUrlPhoto());

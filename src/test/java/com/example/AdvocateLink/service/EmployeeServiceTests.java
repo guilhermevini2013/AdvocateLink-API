@@ -2,16 +2,16 @@ package com.example.AdvocateLink.service;
 
 import com.example.AdvocateLink.dto.EmployeeDTO;
 import com.example.AdvocateLink.models.Employee;
+import com.example.AdvocateLink.models.Role;
 import com.example.AdvocateLink.repostories.ManageableRepository;
 import com.example.AdvocateLink.service.factory.Factory;
 import com.example.AdvocateLink.services.EmployeeService;
+import com.example.AdvocateLink.services.exceptions.LackOfInformationException;
 import com.example.AdvocateLink.services.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,8 +23,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -40,7 +39,8 @@ public class EmployeeServiceTests {
     private EmployeeDTO employeeDTO;
     private Employee employee;
     private Page<Employee>  employeePage;
-
+    @Captor
+    private ArgumentCaptor<Employee> employeeCaptor;
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -58,8 +58,23 @@ public class EmployeeServiceTests {
         doThrow(ResourceNotFoundException.class).when(manageableRepository).findEmployeeById(idNotExists);
     }
     @Test
+    public void updateShouldThrowLackOfInformationExceptionAndNotSaveInDataBaseWhenHaveAttributesNull(){
+        employeeDTO.setName("");
+        assertThrows(LackOfInformationException.class,()-> manageableService.update(idExists, employeeDTO));
+        verify(manageableRepository,never()).save(any());
+    }
+    @Test
+    public void updateShouldThrowResourceNotFoundExceptionAndNotSaveInDataBaseWhenIdNotExists(){
+        assertThrows(ResourceNotFoundException.class,()-> manageableService.update(idNotExists, employeeDTO));
+        verify(manageableRepository,never()).save(any());
+    }
+    @Test
     public void updateShouldUpdatedObjectAndSaveInDatabaseWhenIdExists(){
-
+        employeeDTO.setName("Hello, word");
+        assertDoesNotThrow(()-> manageableService.update(idExists, employeeDTO));
+        verify(manageableRepository,times(1)).save(employeeCaptor.capture());
+        employee = employeeCaptor.getValue();
+        assertEquals(employeeDTO.getName(),employee.getName());
     }
     @Test
     public void findByIdShouldThrowResourceNotFoundExceptionAndNotReturnObjectWhenIdNotExists(){
