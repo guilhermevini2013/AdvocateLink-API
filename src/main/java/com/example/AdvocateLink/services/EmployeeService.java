@@ -55,15 +55,11 @@ public class EmployeeService implements Iservice<EmployeeDTO> {
     @Override
     @Transactional
     public EmployeeDTO update(Long id, EmployeeDTO employeeDTO) {
-        try {
-            Employee entity = repository.findEmployeeById(id).orElseThrow(() -> new ResourceNotFoundException("Id not Found " + id));
-            updateObject(employeeDTO, entity);
-            repository.save(entity);
-            logger.info("Employee Updated");
-            return new EmployeeDTO(entity);
-        } catch (EntityNotFoundException | ObjectNotFoundException ex) {
-            throw new ResourceNotFoundException("Id Not Found " + id);
-        }
+        Employee entity = repository.findEmployeeById(id).orElseThrow(() -> new ResourceNotFoundException("Id not Found " + id));
+        updateObject(employeeDTO, entity);
+        repository.save(entity);
+        logger.info("Employee Updated");
+        return new EmployeeDTO(entity);
     }
 
     @Override

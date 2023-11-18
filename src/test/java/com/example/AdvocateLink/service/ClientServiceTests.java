@@ -1,9 +1,12 @@
 package com.example.AdvocateLink.service;
 
+import com.example.AdvocateLink.dto.ClientDTO;
 import com.example.AdvocateLink.dto.EmployeeDTO;
+import com.example.AdvocateLink.models.Client;
 import com.example.AdvocateLink.models.Employee;
 import com.example.AdvocateLink.repostories.ManageableRepository;
 import com.example.AdvocateLink.service.factory.Factory;
+import com.example.AdvocateLink.services.ClientService;
 import com.example.AdvocateLink.services.EmployeeService;
 import com.example.AdvocateLink.services.exceptions.LackOfInformationException;
 import com.example.AdvocateLink.services.exceptions.ResourceNotFoundException;
@@ -24,90 +27,88 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-
-
 @MockitoSettings(strictness = Strictness.LENIENT)
-public class EmployeeServiceTests {
+public class ClientServiceTests {
     @InjectMocks
-    private EmployeeService employeeService;
+    private ClientService clientService;
     @Mock
     private ManageableRepository manageableRepository;
     private Long idExists;
     private Long idNotExists;
-    private EmployeeDTO employeeDTO;
-    private Employee employee;
-    private Page<Employee>  employeePage;
+    private ClientDTO clientDTO;
+    private Client client;
+    private Page<Client> clientPage;
     @Captor
-    private ArgumentCaptor<Employee> employeeCaptor;
+    private ArgumentCaptor<Client> clientCaptor;
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         idExists = 1l;
         idNotExists = 2l;
-        employeeDTO = Factory.createEmployeeDTO();
-        employee = Factory.createEmployee();
-        employeePage = new PageImpl<>(List.of(employee,employee));
-        employeeService = new EmployeeService(manageableRepository);
-        when(manageableRepository.save((Employee)any())).thenReturn(employee);
-        when(manageableRepository.findEmployeeById(idExists)).thenReturn(Optional.of(employee));
+        clientDTO = Factory.createClientDto();
+        client = Factory.createClient();
+        clientPage = new PageImpl<>(List.of(client,client));
+        clientService = new ClientService(manageableRepository);
+        when(manageableRepository.save((Client)any())).thenReturn(client);
+        when(manageableRepository.findClientById(idExists)).thenReturn(Optional.of(client));
         doNothing().when(manageableRepository).delete(any());
-        when(manageableRepository.findEmployeeById(idNotExists)).thenReturn(Optional.empty());
-        when(manageableRepository.findAllEmployees(any())).thenReturn(employeePage);
+        when(manageableRepository.findClientById(idNotExists)).thenReturn(Optional.empty());
+        when(manageableRepository.findAllClient(any())).thenReturn(clientPage);
         doThrow(ResourceNotFoundException.class).when(manageableRepository).findEmployeeById(idNotExists);
     }
     @Test
     public void updateShouldThrowLackOfInformationExceptionAndNotSaveInDataBaseWhenHaveAttributesNull(){
-        employeeDTO.setName("");
-        assertThrows(LackOfInformationException.class,()-> employeeService.update(idExists, employeeDTO));
+        clientDTO.setName("");
+        assertThrows(LackOfInformationException.class,()-> clientService.update(idExists, clientDTO));
         verify(manageableRepository,never()).save(any());
     }
     @Test
     public void updateShouldThrowResourceNotFoundExceptionAndNotSaveInDataBaseWhenIdNotExists(){
-        assertThrows(ResourceNotFoundException.class,()-> employeeService.update(idNotExists, employeeDTO));
+        assertThrows(ResourceNotFoundException.class,()-> clientService.update(idNotExists, clientDTO));
         verify(manageableRepository,never()).save(any());
     }
     @Test
     public void updateShouldUpdatedObjectAndSaveInDatabaseWhenIdExists(){
-        employeeDTO.setName("Hello, word");
-        assertDoesNotThrow(()-> employeeService.update(idExists, employeeDTO));
-        verify(manageableRepository,times(1)).save(employeeCaptor.capture());
-        employee = employeeCaptor.getValue();
-        assertEquals(employeeDTO.getName(),employee.getName());
+        clientDTO.setName("Hello, word");
+        assertDoesNotThrow(()-> clientService.update(idExists, clientDTO));
+        verify(manageableRepository,times(1)).save(clientCaptor.capture());
+        client = clientCaptor.getValue();
+        assertEquals(clientDTO.getName(),client.getName());
     }
     @Test
     public void findByIdShouldThrowResourceNotFoundExceptionAndNotReturnObjectWhenIdNotExists(){
-        assertThrows(ResourceNotFoundException.class,()-> employeeService.findById(idNotExists));
-        verify(manageableRepository,times(1)).findEmployeeById(idNotExists);
+        assertThrows(ResourceNotFoundException.class,()-> clientService.findById(idNotExists));
+        verify(manageableRepository,times(1)).findClientById(idNotExists);
     }
     @Test
     public void findByIdShouldReturnObjectDTOWhenIdExists(){
-        Assertions.assertDoesNotThrow(()-> employeeService.findById(idExists));
-        Assertions.assertNotNull(employeeService.findById(idExists));
-        verify(manageableRepository,times(2)).findEmployeeById(idExists);
+        Assertions.assertDoesNotThrow(()-> clientService.findById(idExists));
+        Assertions.assertNotNull(clientService.findById(idExists));
+        verify(manageableRepository,times(2)).findClientById(idExists);
 
     }
     @Test
     public void listShouldListAllEmployee(){
         Pageable pageable = PageRequest.of(0, 10);
-        assertNotNull(employeeService.list(pageable));
-        verify(manageableRepository, times(1)).findAllEmployees(pageable);
+        assertNotNull(clientService.list(pageable));
+        verify(manageableRepository, times(1)).findAllClient(pageable);
     }
     @Test
     public void deleteByIdShouldThrowResourceNotFoundExceptionAndNotSaveInDataBaseWhenIdNotExists(){
-        assertThrows(ResourceNotFoundException.class,()-> employeeService.deleteById(idNotExists));
-        verify(manageableRepository,times(1)).findEmployeeById(idNotExists);
+        assertThrows(ResourceNotFoundException.class,()-> clientService.deleteById(idNotExists));
+        verify(manageableRepository,times(1)).findClientById(idNotExists);
         verify(manageableRepository,never()).delete(any());
     }
     @Test
     public void deleteByIdShouldRemoveObjectInDataBaseWhenIdExists(){
-        employeeService.deleteById(idExists);
-        verify(manageableRepository,times(1)).findEmployeeById(idExists);
+        clientService.deleteById(idExists);
+        verify(manageableRepository,times(1)).findClientById(idExists);
         verify(manageableRepository,times(1)).delete(any());
     }
     @Test
     public void insertShouldInsertInDataBaseAndReturnObjectDTO(){
-        employeeDTO = employeeService.insert(employeeDTO);
+        clientDTO = clientService.insert(clientDTO);
         verify(manageableRepository,times(1)).save(any());
-        assertNotNull(employeeDTO.getId());
+        assertNotNull(clientDTO.getId());
     }
 }
