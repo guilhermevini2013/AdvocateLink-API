@@ -101,6 +101,7 @@
 
   <p><strong>Example Response</strong>:</p>
   <p>HTTP Status Code: <code>204 No Content</code></p>
+  <p>HTTP Status Code: <code>404 Not Found</code></p>
 
   <h2>HTTP Status Codes</h2>
 
