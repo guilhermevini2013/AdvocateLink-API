@@ -21,6 +21,8 @@
     <li><code>direction</code> (optional, default: "ASC"): Sorting direction (ASC or DESC)</li>
     <li><code>orderBy</code> (optional, default: "id"): Field to order by</li>
   </ul>
+  <p><strong>Example Response</strong>:</p>
+  <p>HTTP Status Code: <code>200 OK</code></p>
 
   <p><strong>Example Response</strong>:</p>
 
@@ -52,6 +54,7 @@
   <p><strong>Endpoint</strong>: <code>POST /advocateLink/api/v1/role</code></p>
 
   <p><strong>Description</strong>: Creates a new role.</p>
+  <p>HTTP Status Code: <code>201 Created</code></p>
 
   <p><strong>Example Request</strong>:</p>
 
@@ -75,6 +78,9 @@
   <p><strong>Endpoint</strong>: <code>PUT /advocateLink/api/v1/role/{id}</code></p>
 
   <p><strong>Description</strong>: Updates an existing role.</p>
+  <p><strong>Example Response</strong>:</p>
+  <p>HTTP Status Code: <code>200 OK</code></p>
+  <p>HTTP Status Code: <code>404 Not Found</code></p>
 
   <p><strong>Example Request</strong>:</p>
 
