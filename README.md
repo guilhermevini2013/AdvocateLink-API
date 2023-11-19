@@ -293,8 +293,6 @@
   <p><strong>Example Response</strong>:</p>
   <p>HTTP Status Code: <code>204 No Content</code></p>
   <p>HTTP Status Code: <code>404 Not Found</code></p>
-  <p><strong>Example Response</strong>:</p>
-  <p>HTTP Status Code: <code>204 No Content</code></p>
 
   <h2>HTTP Status Codes</h2>
 
@@ -307,5 +305,166 @@
   </ul>
   </pre>
 
+<h1>Advocate Link API - Client Service</h1>
+
+  <p>This documentation provides details for the <code>Client</code> management API, specifically focusing on the <code>ClientService</code>. The API allows you to insert a new client, update an existing client, delete a client, list clients, and find a client by ID.</p>
+
+  <h2>Endpoints</h2>
+
+  <h3>1. Insert Client</h3>
+
+  <p><strong>Endpoint</strong>: <code>POST /advocateLink/api/v1/client</code></p>
+
+  <p><strong>Description</strong>: Creates a new client.</p>
+
+  <p><strong>Example Request</strong>:</p>
+
+  <pre>
+  {
+    "name": "John Doe",
+    "cpf": "123.456.789-01",
+    "addresses": [...],
+    "contacts": [...],
+    "urlPhoto": "https://example.com/photo.jpg",
+    "role_id": {
+      "id": 2,
+      "name_Role": "Senior Legal Counsel"
+    },
+    "oab": "XYZ123"
+  }
+  </pre>
+
+  <p><strong>Example Response</strong>:</p>
+  <p>HTTP Status Code: <code>201 Created</code></p>
+
+  <pre>
+  {
+    "id": {new_client_id},
+    "name": "John Doe",
+    "cpf": "123.456.789-01",
+    "addresses": [...],
+    "contacts": [...],
+    "urlPhoto": "https://example.com/photo.jpg",
+    "role_id": {
+      "id": 2,
+      "name_Role": "Senior Legal Counsel"
+    },
+    "oab": "XYZ123"
+  }
+  </pre>
+
+  <h3>2. Update Client</h3>
+
+  <p><strong>Endpoint</strong>: <code>PUT /advocateLink/api/v1/client/{id}</code></p>
+
+  <p><strong>Description</strong>: Updates details of an existing client.</p>
+
+  <p><strong>Example Request</strong>:</p>
+
+  <pre>
+  {
+    "name": "Updated John Doe",
+    "cpf": "123.456.789-01",
+    "addresses": [...],
+    "contacts": [...],
+    "urlPhoto": "https://example.com/updated-photo.jpg",
+    "role_id": {
+      "id": 2,
+      "name_Role": "Senior Legal Counsel"
+    },
+    "oab": "ABC456"
+  }
+  </pre>
+
+  <p><strong>Example Response</strong>:</p>
+  <p>HTTP Status Code: <code>200 OK</code></p>
+  <p>HTTP Status Code: <code>404 Not Found</code></p>
+  <h3>3. Delete Client</h3>
+
+  <p><strong>Endpoint</strong>: <code>DELETE /advocateLink/api/v1/client/{id}</code></p>
+
+  <p><strong>Description</strong>: Deletes an existing client.</p>
+
+  <p><strong>Example Response</strong>:</p>
+  <p>HTTP Status Code: <code>204 No Content</code></p>
+  <p>HTTP Status Code: <code>404 Not Found</code></p>
+
+  <h3>4. List Clients</h3>
+
+  <p><strong>Endpoint</strong>: <code>GET /advocateLink/api/v1/client</code></p>
+
+  <p><strong>Description</strong>: Retrieves a paginated list of clients.</p>
+
+  <p><strong>Parameters</strong>:</p>
+  <ul>
+    <li><code>page</code> (optional, default: 0): Page number</li>
+    <li><code>linesPerPage</code> (optional, default: 15): Number of lines per page</li>
+    <li><code>direction</code> (optional, default: "ASC"): Sorting direction ("ASC" or "DESC")</li>
+    <li><code>orderBy</code> (optional, default: "name"): Sorting field</li>
+  </ul>
+
+  <p><strong>Example Request</strong>: <code>GET /advocateLink/api/v1/client?page=0&amp;linesPerPage=10&amp;direction=ASC&amp;orderBy=name</code></p>
+
+  <p><strong>Example Response</strong>:</p>
+  <p>HTTP Status Code: <code>200 OK</code></p>
+  <pre>
+  {
+    "content": [
+      {
+        "id": 1,
+        "name": "John Doe",
+        "cpf": "123.456.789-01",
+        "addresses": [...],
+        "contacts": [...],
+        "urlPhoto": "https://example.com/photo.jpg",
+        "role_id": {
+          "id": 2,
+          "name_Role": "Senior Legal Counsel"
+        },
+        "oab": "ABC456"
+      },
+      // ... additional clients ...
+    ],
+    "totalElements": 25,
+    "totalPages": 3,
+    "number": 0,
+    "size": 10
+  }
+  </pre>
+
+  <h3>5. Find Client by ID</h3>
+
+  <p><strong>Endpoint</strong>: <code>GET /advocateLink/api/v1/client/{id}</code></p>
+
+  <p><strong>Description</strong>: Retrieves details of a specific client by ID.</p>
+
+  <p><strong>Example Response</strong>:</p>
+  <p>HTTP Status Code: <code>200 OK</code></p>
+  <p>HTTP Status Code: <code>404 Not Found</code></p>
+  <pre>
+  {
+    "id": 1,
+    "name": "John Doe",
+    "cpf": "123.456.789-01",
+    "addresses": [...],
+    "contacts": [...],
+    "urlPhoto": "https://example.com/photo.jpg",
+    "role_id": {
+      "id": 2,
+      "name_Role": "Senior Legal Counsel"
+    },
+    "oab": "ABC456"
+  }
+  </pre>
+
+  <h2>HTTP Status Codes</h2>
+
+  <ul>
+    <li><strong>200 OK</strong>: Successful operation (for successful GET and PUT requests).</li>
+    <li><strong>201 Created</strong>: Successful creation (for successful POST requests).</li>
+    <li><strong>204 No Content</strong>: Successful deletion (for successful DELETE requests).</li>
+    <li><strong>400 Bad Request</strong>: Malformed request or invalid input.</li>
+    <li><strong>404 Not Found</strong>: Resource not found.</li>
+  </ul>
 
 
