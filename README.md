@@ -130,7 +130,8 @@
   <p><strong>Endpoint</strong>: <code>GET /advocateLink/api/v1/employee/statistics</code></p>
 
   <p><strong>Description</strong>: Retrieves statistics related to employees.</p>
-
+  <p><strong>Example Response</strong>:</p>
+  <p>HTTP Status Code: <code>200 OK</code></p>
   <p><strong>Example Response</strong>:</p>
 
   <pre>
@@ -153,6 +154,8 @@
     <li><code>direction</code> (optional, default: "ASC"): Sorting direction (ASC or DESC)</li>
     <li><code>orderBy</code> (optional, default: "name"): Field to order by</li>
   </ul>
+  <p><strong>Example Response</strong>:</p>
+  <p>HTTP Status Code: <code>200 OK</code></p>
 
   <p><strong>Example Response</strong>:</p>
 
@@ -190,7 +193,9 @@
   <p><strong>Endpoint</strong>: <code>GET /advocateLink/api/v1/employee/{id}</code></p>
 
   <p><strong>Description</strong>: Retrieves details of a specific employee by ID.</p>
-
+  <p><strong>Example Response</strong>:</p>
+  <p>HTTP Status Code: <code>200 OK</code></p>
+  <p>HTTP Status Code: <code>404 Not Found</code></p>
   <p><strong>Example Response</strong>:</p>
 
   <pre>
@@ -214,9 +219,11 @@
   <p><strong>Endpoint</strong>: <code>POST /advocateLink/api/v1/employee</code></p>
 
   <p><strong>Description</strong>: Creates a new employee.</p>
-
+  <p><strong>Example Response</strong>:</p>
+  <p>HTTP Status Code: <code>201 CREATED</code></p>
+  
   <p><strong>Example Request</strong>:</p>
-
+  
   <pre>
   {
     "name": "Jane Smith",
@@ -255,7 +262,9 @@
   <p><strong>Endpoint</strong>: <code>PUT /advocateLink/api/v1/employee/{id}</code></p>
 
   <p><strong>Description</strong>: Updates details of an existing employee.</p>
-
+  <p><strong>Example Response</strong>:</p>
+  <p>HTTP Status Code: <code>200 OK</code></p>
+  <p>HTTP Status Code: <code>400 BAD REQUEST</code></p>
   <p><strong>Example Request</strong>:</p>
 
   <pre>
@@ -281,7 +290,9 @@
   <p><strong>Endpoint</strong>: <code>DELETE /advocateLink/api/v1/employee/{id}</code></p>
 
   <p><strong>Description</strong>: Deletes an existing employee.</p>
-
+  <p><strong>Example Response</strong>:</p>
+  <p>HTTP Status Code: <code>204 No Content</code></p>
+  <p>HTTP Status Code: <code>404 Not Found</code></p>
   <p><strong>Example Response</strong>:</p>
   <p>HTTP Status Code: <code>204 No Content</code></p>
 
@@ -294,20 +305,6 @@
     <li><strong>400 Bad Request</strong>: Malformed request or invalid input.</li>
     <li><strong>404 Not Found</strong>: Resource not found.</li>
   </ul>
-
-  <h2>EmployeeDTO</h2>
-
-  <pre>
-  <code>
-  public class EmployeeDTO extends ManageableDTO {
-      private Double salary;
-
-      public EmployeeDTO(long id, String name, String cpf, Set&lt;AddressDTO&gt; addressesDTO, Set&lt;ContactDTO&gt; contactsDTO, String urlPhoto, Role role_id, Double salary) {
-          super(id, name, cpf, addressesDTO, contactsDTO, urlPhoto, role_id);
-          this.salary = salary;
-      }
-  }
-  </code>
   </pre>
 
 
