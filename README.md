@@ -112,25 +112,5 @@
     <li><strong>404 Not Found</strong>: Resource not found.</li>
   </ul>
 
-  <h2>RoleDTO</h2>
-
-  <pre>
-  <code>
-  @Getter
-  @Setter
-  @AllArgsConstructor
-  @NoArgsConstructor
-  public class RoleDTO {
-      @JsonIgnore
-      private Long id;
-      private String name_Role;
-
-      public RoleDTO(Role entity){
-          this.id = entity.getId();
-          this.name_Role = entity.getName_Role();
-      }
-  }
-  </code>
-  </pre>
 
 
