@@ -13,6 +13,7 @@ orderBy (optional, default: "id"): Field to order by
 Example Response:
 Status Code: 200 OK
 Content:
+**
 {
   "content": [
     {
@@ -33,4 +34,5 @@ Content:
   "last": true,
   "empty": false
 }
+**
 
