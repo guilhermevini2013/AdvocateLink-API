@@ -25,7 +25,7 @@ public class Factory {
         return new RoleDTO(createRole());
     }
     public static RoleDTO createRoleDtoNullAttributes(){
-        return new RoleDTO(2l,null);
+        return new RoleDTO(2l,"");
     }
     public static ClientDTO createClientDto(){
         return new ClientDTO(1l,"guilherme","123",new HashSet<>(),new HashSet<>(),"1",new Role(1l,"ee"),"123");

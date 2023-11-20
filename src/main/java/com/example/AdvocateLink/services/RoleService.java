@@ -81,7 +81,7 @@ public class RoleService implements Iservice<RoleDTO> {
     }
 
     private void alterRole(RoleDTO roleDTO, Role role) {
-        if (roleDTO.getName_Role() == null) throw new LackOfInformationException("Attributes Null");
+        if (roleDTO.getName_Role() == null || roleDTO.getName_Role().isBlank()) throw new LackOfInformationException("Attributes Null");
         role.setName_Role(roleDTO.getName_Role());
     }
 }
